@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const socket = require("socket.io");
 
 const app = express();
 
@@ -15,6 +16,11 @@ app.listen(3000, () => {
     console.log("server is up and listening on port 3000");
 });
 
+const io = socket(server);
+
+io.on("connection", function (socket) {
+  console.log("Made socket connection");
+});
 
 
 // CREATIND API ENDPOINTS
