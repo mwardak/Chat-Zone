@@ -5,7 +5,15 @@ const app = express();
 
 app.use("/", express.static(path.join(__dirname, "client/build")));
 
-app.listen(3000);
+
+app.get("/", (req, res) =>{
+    console.log("Responding to root route");
+    res.send("Hello from root");
+})
+
+app.listen(3000, () => {
+    console.log("server is up and listening on port 3000");
+});
 
 
 
