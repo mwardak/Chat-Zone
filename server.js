@@ -8,38 +8,31 @@ app.use("/", express.static(path.join(__dirname, "client/build")));
 
 //dummy data for testing api
 const users = [
-    {username:"John", id: 1, text:"Hi everyone"},
-    {username:"Mike", id: 2, text:"Hows its going"}
+  { username: "John", id: 1, text: "Hi everyone" },
+  { username: "Mike", id: 2, text: "Hows its going" },
+];
 
-  ];
-  
-  app.get("/api/users", (req, res) => {
-    
-    res.send(users);
-})
+app.get("/api/users", (req, res) => {
+  res.send(users);
+});
 
-
-// This is how you specify a route path or URL with "/" and a callback/route handler 
+// This is how you specify a route path or URL with "/" and a callback/route handler
 app.get("/api/users/:id", (req, res) => {
-    
-   const userId  = users.find(u => u.id === parseInt(req.params.id))
-   if(!userId)res.status(404).send("The user was not found") ;
-})
-
+  const userId = users.find((u) => u.id === parseInt(req.params.id));
+  if (!userId) res.status(404).send("The user was not found");
+});
 
 // Environtment variable for hosting
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`server listening on port ${port}`);
+  console.log(`server listening on port ${port}`);
 });
 
 // const io = socket(server);
 
-
 // io.on("connection", function (socket) {
 //   console.log("Made socket connection");
 // });
-
 
 // CREATIND API ENDPOINTS
 // 1. Get all messages - GET: "api/messages"
