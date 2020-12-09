@@ -21,7 +21,11 @@ import Style from "./Style.css";
 const App = () => {
   // const [users, setUsers] = useState([]);
 
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {username:"John", id: 1, text:"Hi everyone"},
+    {username:"Mike", id: 2, text:"Hows its going"}
+
+  ]);
 
   let textInputRef = useRef();
 
