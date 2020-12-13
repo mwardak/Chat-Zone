@@ -1,6 +1,13 @@
+import axios from "axios";
 const express = require("express");
 const path = require("path");
 // const socket = require("socket.io");
+
+// const io = socket(server);
+
+// io.on("connection", socket => {
+//   socket.emit("chat-message", "hello world")
+// });
 
 const app = express();
 
@@ -8,18 +15,23 @@ app.use("/", express.static(path.join(__dirname, "client/build")));
 
 //dummy data for testing api
 const users = [
-  { username: "John", id: 1, text: "Hi everyone" },
-  { username: "Mike", id: 2, text: "Hows its going" },
+  { username: "John", id: 1, email: "john@gmail.com" },
+  { username: "Mike", id: 2, email: "mike@gmail.com" },
 ];
 
-app.get("/api/users", (req, res) => {
-  res.send(users);
-});
+const fetchUser = async () => {
+  const users = await axios.get("/api/users", (req, res) => {
+    res.send(users);
+  });
+  
 
-// This is how you specify a route path or URL with "/" and a callback/route handler
+
+  
+// This is how you specify a route path/URL with "/" and a callback/route handler
 app.get("/api/users/:id", (req, res) => {
   const userId = users.find((u) => u.id === parseInt(req.params.id));
   if (!userId) res.status(404).send("The user was not found");
+  res.send(userId)
 });
 
 // Environtment variable for hosting
@@ -28,11 +40,7 @@ app.listen(port, () => {
   console.log(`server listening on port ${port}`);
 });
 
-// const io = socket(server);
 
-// io.on("connection", function (socket) {
-//   console.log("Made socket connection");
-// });
 
 // CREATIND API ENDPOINTS
 // 1. Get all messages - GET: "api/messages"
