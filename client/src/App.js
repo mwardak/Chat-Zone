@@ -21,16 +21,21 @@ const App = () => {
   const [messages, setMessages] = useState([]);
 
   const fetchUser = async () => {
-    const userResponse1 = await axios.get("http://localhost:3000/api/users");
+    const userResponse1 = await axios.get("/api/users");
 
-    setUsers(userResponse1);
+    setUsers(userResponse1.data);
+  };
+
+  const fetchMessage = async () => {
+    const messageResponse1 = await axios.get("/api/messages");
+
+    setMessages(messageResponse1.data);
   };
 
   useEffect(() => {
     fetchUser();
+    fetchMessage();
   }, []);
-
-
 
   let textInputRef = useRef();
 
@@ -54,7 +59,8 @@ const App = () => {
   return (
     <div className="container">
       <div className="user">
-        USERS <br/>{chatUsers}
+        USERS <br />
+        {chatUsers}
       </div>
       <div className="row">
         <form className="text-center" onSubmit={handleSubmit}>
