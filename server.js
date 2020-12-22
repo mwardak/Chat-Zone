@@ -1,17 +1,13 @@
 const express = require("express");
 const path = require("path");
 const socket = require("socket.io");
-const pool = require("./db")
+const pool = require("./db");
 
 // const io = socket(server);
 
 // io.on("connection", socket => {
 //   socket.emit("chat-message", "hello world")
 // });
-
-
-
-
 
 const app = express();
 
@@ -20,20 +16,16 @@ app.use(express.json());
 
 // ROUTES
 // create users
-app.post("/chat", async(req,res) => {
+app.post("/chat", async (req, res) => {
   try {
-  
-  console.log(req.body);
-    
+    const newUser = await pool.query("INSERT INTO users")
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-  
-  
-  });
-  // get all users
-  // update user
-  // delete a user
+});
+// get all users
+// update user
+// delete a user
 
 //dummy data for testing api
 // const usersLoggedIn = [
@@ -50,7 +42,6 @@ app.post("/chat", async(req,res) => {
 //   { username: "Mike", id: 2, text: "Hi" },
 // ];
 
-
 // app.get("/api/messages", (req, res) => {
 //   res.send(userMessages);
 // });
@@ -66,8 +57,6 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`server listening on port ${port}`);
 });
-
-
 
 // CREATIND API ENDPOINTS
 // 1. Get all messages - GET: "api/messages"
