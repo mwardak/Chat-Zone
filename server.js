@@ -16,14 +16,22 @@ app.use(express.json());
 
 // ROUTES
 // create users
-app.post("/chat", async (req, res) => {
-  try {
-    const newUser = await pool.query("INSERT INTO users")
-  } catch (error) {
-    console.log(error.message);
-  }
-});
+// app.post("/api/users", async (req, res) => {
+//   try {
+//     const newUser = await pool.query("INSERT INTO users")
+//   } catch (error) {
+  
+//     console.log(error.message);
+//   }
+// });
 // get all users
+app.get("/api/users", async (req, res) => {
+    try {
+      const newUser = await pool.query("SELECT * FROM users")
+    } catch (error) {
+      console.log(error.message);
+    }
+  });
 // update user
 // delete a user
 
