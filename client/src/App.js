@@ -22,7 +22,7 @@ const App = () => {
 
   const fetchUser = async () => {
     const userResponse1 = await axios.get("/api/users");
-
+    console.log(userResponse1.data, "this works")
     setUsers(userResponse1.data);
   };
 

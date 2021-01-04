@@ -26,11 +26,12 @@ app.use(express.json());
 // });
 // get all users
 app.get("/api/users", async (req, res) => {
-    try {
-      const newUser = await pool.query("SELECT * FROM users")
-    } catch (error) {
-      console.log(error.message);
-    }
+    
+      const allUsers = await pool.query("SELECT users_names FROM users")
+   
+      
+      res.json(allUsers.rows);
+    
   });
 // update user
 // delete a user
