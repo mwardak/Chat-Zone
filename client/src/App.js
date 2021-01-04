@@ -45,7 +45,7 @@ const App = () => {
     textInputRef.current.value = "";
   };
   const chatUsers = users.map((user) => {
-    return <p>{user.username}</p>;
+    return <p>{user.users_names}</p>;
   });
 
   const chatMessages = messages.map((chat) => {
