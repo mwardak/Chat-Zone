@@ -21,11 +21,11 @@ app.post("/api/users", async (req, res) => {
   try {
     const createNewUser = {name: "Adam"};
     
-    const newUser = await pool.query("INSERT INTO users ('craeteNewUser') VALUES($1)",
+    const newUser = await pool.query("INSERT INTO users(users_names) VALUES(createNewUser)",
     [createNewUser]
     );
 
-    res.json(newUser.rows[0])
+    res.json(newUser.rows)
   } catch (err) {
   
     console.error(err.message);
