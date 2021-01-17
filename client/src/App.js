@@ -21,7 +21,7 @@ const App = () => {
   const [messages, setMessages] = useState([]);
 
   const fetchUser = async () => {
-    const userResponse1 = await axios.get("/api/users");
+    const userResponse1 = await axios.get("/api/name");
     
     setUsers(userResponse1.data);
   };
@@ -41,17 +41,17 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setMessages([{ text: textInputRef.current.value, username: "Maher" }]);
+    setMessages([{ text: textInputRef.current.value, name: "Maher" }]);
     textInputRef.current.value = "";
   };
   const chatUsers = users.map((user) => {
-    return <p>{user.users_names}</p>;
+    return <p>{user.name}</p>;
   });
 
   const chatMessages = messages.map((chat) => {
     return (
       <p>
-        {chat.text}({chat.username})
+        {chat.text}
       </p>
     );
   });

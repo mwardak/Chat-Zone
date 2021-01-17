@@ -17,25 +17,25 @@ app.use(express.json());
 // ROUTES
 // create users
 
-app.post("/api/users", async (req, res) => {
+app.post("/api/name", async (req, res) => {
   try {
-    const createNewUser = {name: "Adam"};
+    const createNewUser = "Adam";
     
-    const newUser = await pool.query("INSERT INTO users(users_names) VALUES(createNewUser)",
+    const newUser = await pool.query("INSERT INTO users(name) VALUES($1) RETURNING *",
     [createNewUser]
     );
 
     res.json(newUser.rows)
   } catch (err) {
   
-    console.error(err.message);
+    res.status(500).send(err.message);
   }
   
 });
 // get all users
-app.get("/api/users", async (req, res) => {
+app.get("/api/name", async (req, res) => {
     
-      const allUsers = await pool.query("SELECT users_names FROM users")
+      const allUsers = await pool.query("SELECT name FROM users")
    
       
       res.json(allUsers.rows);
