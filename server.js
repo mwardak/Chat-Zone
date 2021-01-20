@@ -34,7 +34,8 @@ app.post("/api/name", async (req, res) => {
 });
 // get all users
 app.get("/api/name", async (req, res) => {
-    
+
+      
       const allUsers = await pool.query("SELECT name FROM users")
    
       
@@ -42,6 +43,16 @@ app.get("/api/name", async (req, res) => {
     
   });
 // update user
+
+app.put("/api/name/:id", async (req, res) => { 
+
+const {id} = req.params;
+const {name} = req.body;
+  
+  const singleUser = await pool.query("UPDATE users SET name = $1 WHERE users_id = $2"
+  [name, id])
+  res.json(singleUser.rows);
+});
 // delete a user
 
 //dummy data for testing api
