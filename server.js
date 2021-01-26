@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const socket = require("socket.io");
+// const socket = require("socket.io");
 const pool = require("./db");
 
 // const io = socket(server);
@@ -17,41 +17,40 @@ app.use(express.json());
 // ROUTES
 // create users
 
-app.post("/api/name", async (req, res) => {
+app.post("/api/users", async (req, res) => {
   try {
     const createNewUser = "Adam";
-    
-    const newUser = await pool.query("INSERT INTO users(name) VALUES($1) RETURNING *",
-    [createNewUser]
+
+    const newUser = await pool.query(
+      "INSERT INTO users(name) VALUES($1) RETURNING *",
+      [createNewUser]
     );
 
-    res.json(newUser.rows)
+    res.json(newUser.rows);
   } catch (err) {
-  
     res.status(500).send(err.message);
   }
-  
 });
 // get all users
-app.get("/api/name", async (req, res) => {
+app.get("/api/users", async (req, res) => {
+  const allUsers = await pool.query("SELECT name FROM users");
 
-      
-      const allUsers = await pool.query("SELECT name FROM users")
-   
-      
-      res.json(allUsers.rows);
-    
-  });
+  res.json(allUsers.rows);
+});
 // update user
 
-app.put("/api/name/:id", async (req, res) => { 
-
-const {id} = req.params;
-const {name} = req.body;
-  
-  const singleUser = await pool.query("UPDATE users SET name = $1 WHERE users_id = $2"
-  [name, id])
-  res.json(singleUser.rows);
+app.put("/api/users/:id", async (req, res) => {
+  const { id } = 1;
+  const { name } ="maher";
+  try {
+    const singleUser = await pool.query(
+      "UPDATE users SET name = $1 WHERE users_id = $2",
+      [name, id]
+    );
+    res.json(singleUser.rows);
+  } catch (err) {
+    console.log(err);
+  }
 });
 // delete a user
 

@@ -21,7 +21,7 @@ const App = () => {
   const [messages, setMessages] = useState([]);
 
   const fetchUser = async () => {
-    const userResponse1 = await axios.get("/api/name");
+    const userResponse1 = await axios.get("/api/users/");
     
     setUsers(userResponse1.data);
   };
