@@ -20,13 +20,14 @@ app.use(express.json());
 app.post("/api/users", async (req, res) => {
   try {
     const createNewUser = "Adam";
+    const userMessage = "hello"
 
     const newUser = await pool.query(
-      "INSERT INTO users(name) VALUES($1) RETURNING *",
-      [createNewUser]
+      "INSERT INTO users(name, messages) VALUES($1, $2) RETURNING *",
+      [createNewUser, userMessage]
     );
 
-    res.json(newUser.rows);
+    res.json(newUser.rows[0]);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -40,11 +41,11 @@ app.get("/api/users", async (req, res) => {
 // update user
 
 app.put("/api/users/:id", async (req, res) => {
-  const { id } = 1;
-  const { name } ="maher";
+  const  id  = 1;
+  const name = "maher";
   try {
     const singleUser = await pool.query(
-      "UPDATE users SET name = $1 WHERE users_id = $2",
+      "UPDATE users SET name = $1 WHERE id = $2 RETURNING *",
       [name, id]
     );
     res.json(singleUser.rows);
