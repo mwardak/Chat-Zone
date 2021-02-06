@@ -41,8 +41,10 @@ app.get("/api/users", async (req, res) => {
 // update user
 
 app.put("/api/users/:id", async (req, res) => {
-  const  id  = 1;
+  
+  const id = 8;
   const name = "maher";
+ 
   try {
     const singleUser = await pool.query(
       "UPDATE users SET name = $1 WHERE id = $2 RETURNING *",

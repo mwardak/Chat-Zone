@@ -46,6 +46,7 @@ const App = () => {
   };
   const chatUsers = users.map((user) => {
     return <p>{user.name}</p>;
+    
   });
 
   const chatMessages = messages.map((chat) => {
