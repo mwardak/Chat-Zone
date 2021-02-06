@@ -56,6 +56,21 @@ app.put("/api/users/:id", async (req, res) => {
   }
 });
 // delete a user
+app.delete("/api/users/:id", async (req, res) => {
+  
+  const id = 8;
+  const name = "maher";
+ 
+  try {
+    const singleUser = await pool.query(
+      "DELETE users WHERE name = $1 AND id = $2 RETURNING *",
+      [name, id]
+    );
+    res.json(singleUser.rows);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 //dummy data for testing api
 // const usersLoggedIn = [
