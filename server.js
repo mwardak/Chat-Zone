@@ -16,30 +16,29 @@ app.use(express.json());
 
 // ROUTES
 
-// Get all messges
+// Get all messages
 app.get("/api/messages", async (req, res) => {
-  const allUsers = await pool.query("SELECT messages FROM users");
+  const allMessages = await pool.query("SELECT messages FROM users");
 
-  res.json(allUsers.rows);
+  res.json(allMessages.rows);
 });
 
 // Create a chat message
 app.post("/api/messages", async (req, res) => {
   try {
+    // const userId = req.params;
     const chatMessage = req.body;
-    
 
-    const newUser = await pool.query(
+    const newMessage = await pool.query(
       "INSERT INTO users(messages) VALUES($1) RETURNING *",
       [chatMessage]
     );
 
-    res.json(newUser.rows[0]);
+    res.json(newMessage.rows[0]);
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
-
 
 // Get all users
 app.get("/api/users", async (req, res) => {
@@ -52,7 +51,6 @@ app.get("/api/users", async (req, res) => {
 app.post("/api/users", async (req, res) => {
   try {
     const createNewUser = req.body;
-    
 
     const newUser = await pool.query(
       "INSERT INTO users(name) VALUES($1) RETURNING *",
@@ -65,23 +63,19 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-
-// GEt a single user = GET:"api/users/{id}"
+// Get a single user = GET:"api/users/{id}"
 app.get("/api/users/:id", async (req, res) => {
-  
   const id = req.params;
-  
+
   try {
-    const singleUser = await pool.query(
-      "SELECT * FROM users WHERE  id = $1",
-      [id]
-    );
+    const singleUser = await pool.query("SELECT * FROM users WHERE  id = $1", [
+      id,
+    ]);
     res.json(singleUser.rows);
   } catch (err) {
     console.log(err);
   }
 });
-
 
 // // This is how you specify a route path/URL with "/" and a callback/route handler
 // app.get("/api/users/:id", (req, res) => {
