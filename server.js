@@ -15,16 +15,23 @@ app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
 
 // ROUTES
-// create users
 
-app.post("/api/users", async (req, res) => {
+// Get all messges
+app.get("/api/messages", async (req, res) => {
+  const allUsers = await pool.query("SELECT messages FROM users");
+
+  res.json(allUsers.rows);
+});
+
+// Create a chat message
+app.post("/api/messages", async (req, res) => {
   try {
-    const createNewUser = "Adam";
-    const userMessage = "hello"
+    const chatMessage = req.body;
+    
 
     const newUser = await pool.query(
-      "INSERT INTO users(name, messages) VALUES($1, $2) RETURNING *",
-      [createNewUser, userMessage]
+      "INSERT INTO users(messages) VALUES($1) RETURNING *",
+      [chatMessage]
     );
 
     res.json(newUser.rows[0]);
@@ -32,64 +39,50 @@ app.post("/api/users", async (req, res) => {
     res.status(500).send(err.message);
   }
 });
-// get all users
+
+
+// Get all users
 app.get("/api/users", async (req, res) => {
   const allUsers = await pool.query("SELECT name FROM users");
 
   res.json(allUsers.rows);
 });
-// update user
 
-app.put("/api/users/:id", async (req, res) => {
+// Create a user
+app.post("/api/users", async (req, res) => {
+  try {
+    const createNewUser = req.body;
+    
+
+    const newUser = await pool.query(
+      "INSERT INTO users(name) VALUES($1) RETURNING *",
+      [createNewUser]
+    );
+
+    res.json(newUser.rows[0]);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+
+// GEt a single user = GET:"api/users/{id}"
+app.get("/api/users/:id", async (req, res) => {
   
-  const id = 8;
-  const name = "maher";
- 
+  const id = req.params;
+  
   try {
     const singleUser = await pool.query(
-      "UPDATE users SET name = $1 WHERE id = $2 RETURNING *",
-      [name, id]
+      "SELECT * FROM users WHERE  id = $1",
+      [id]
     );
     res.json(singleUser.rows);
   } catch (err) {
     console.log(err);
   }
 });
-// delete a user
-app.delete("/api/users/:id", async (req, res) => {
-  
-  const id = 8;
-  const name = "maher";
- 
-  try {
-    const singleUser = await pool.query(
-      "DELETE users WHERE name = $1 AND id = $2 RETURNING *",
-      [name, id]
-    );
-    res.json(singleUser.rows);
-  } catch (err) {
-    console.log(err);
-  }
-});
 
-//dummy data for testing api
-// const usersLoggedIn = [
-//   { username: "John", id: 1 },
-//   { username: "Mike", id: 2 },
-// ];
 
-// app.get("/api/users", (req, res) => {
-//   res.send(usersLoggedIn);
-// });
-
-// const userMessages = [
-//   { username: "John", id: 1, text: "Hello" },
-//   { username: "Mike", id: 2, text: "Hi" },
-// ];
-
-// app.get("/api/messages", (req, res) => {
-//   res.send(userMessages);
-// });
 // // This is how you specify a route path/URL with "/" and a callback/route handler
 // app.get("/api/users/:id", (req, res) => {
 //   const userId = users.find((u) => u.id === parseInt(req.params.id));
