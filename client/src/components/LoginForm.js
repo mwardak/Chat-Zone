@@ -1,25 +1,34 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const Login = () => {
+const LoginForm = () => {
   return (
     <form>
-      <div className="form-inner">
-        <h2>Login</h2>
+      <div class="form-group">
+        <label>Email Address</label>
         <input
           type="email"
-          name="email"
-          placeholder="email..."
-          required
-        ></input>
-        <input
-          type="password"
-          name="password "
-          placeholder="password..."
-          required
+          class="form-control"
+          id="email"
+          aria-describedby="emailHelp"
+          placeholder="Email..."
         ></input>
       </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Password..."
+        ></input>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        Submit
+      </button>
     </form>
   );
 };
 
-export default Login;
+export default LoginForm;
