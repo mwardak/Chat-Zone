@@ -22,7 +22,7 @@ const App = () => {
 
   const fetchUser = async () => {
     const userResponse1 = await axios.get("/api/users");
-    
+
     setUsers(userResponse1.data);
   };
 
@@ -46,15 +46,10 @@ const App = () => {
   };
   const chatUsers = users.map((user) => {
     return <p>{user.name}</p>;
-    
   });
 
   const chatMessages = messages.map((chat) => {
-    return (
-      <p>
-        {chat.text}
-      </p>
-    );
+    return <p>{chat.text}</p>;
   });
 
   return (
