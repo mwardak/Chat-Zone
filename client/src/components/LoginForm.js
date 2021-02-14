@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const LoginForm = () => {
+const LoginForm = ({ users }) => {
   return (
     <form>
       <div class="form-group">
@@ -10,7 +10,7 @@ const LoginForm = () => {
           type="email"
           class="form-control"
           id="email"
-          aria-describedby="emailHelp"
+          aria-describedby="email"
           placeholder="Email..."
         ></input>
       </div>

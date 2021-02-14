@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Style from "./Style.css";
-// import Users from "./components/Users";
-// import TypeMessage from "./components/TypeMessage";
-// import ChatScreen from "./components/ChatScreen";
+import Users from "./components/Users";
+import Messages from "./components/Messages";
+import InputMessage from "./components/InputMessage";
 
 // import {
 //   Container,
@@ -44,44 +44,13 @@ const App = () => {
     setMessages([{ text: textInputRef.current.value, name: "Maher" }]);
     textInputRef.current.value = "";
   };
-  const chatUsers = users.map((user) => {
-    return <p>{user.name}</p>;
-  });
-
-  const chatMessages = messages.map((chat) => {
-    return <p>{chat.text}</p>;
-  });
 
   return (
     <div className="container">
-      <div className="user">
-        USERS <br />
-        {chatUsers}
-      </div>
-      <div className="row">
-        <form className="text-center" onSubmit={handleSubmit}>
-          <div className="chatscreen">{chatMessages}</div>
-          <input
-            ref={textInputRef}
-            type="text"
-            required
-            className="input"
-            placeholder="Write a message..."
-          ></input>
-          <button>SEND</button>
-        </form>
-      </div>
+      <InputMessage handleSubmit={handleSubmit} textInputRef={textInputRef} />
+      <Users users={users} />
+      <Messages messages={messages} />
     </div>
   );
-
-  //
-
-  // return (
-  //   <div className="container">
-  //     <Users/>
-  //     <TypeMessage/>
-  //     <ChatScreen/>
-  //   </div>
-  // );
 };
 export default App;
