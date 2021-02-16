@@ -119,7 +119,7 @@ const App = () => {
                             <div className="ps-scrollbar-y" tabIndex="0" style={{top: "0px", height: "2px"}}></div>
                         </div>
                     </div>
-                    <div className="publisher bt-1 border-light"> <i className="fa fa-paper-plane"></i> </div>
+                    <div className="publisher bt-1 border-light">  <input className="publisher-input" type="text" placeholder="Write something"></input> <input className="publisher-btn file-group"> <i className="fa fa-paperclip file-browser"></i></input> <input type="file">  <a className="publisher-btn" href="#" data-abc="true"><i className="fa fa-smile"></i></a> <a className="publisher-btn text-info" href="#" data-abc="true"><i className="fa fa-paper-plane"></i></a></input> </div>
                 </div>
             </div>
         </div>
