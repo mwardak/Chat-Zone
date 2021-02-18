@@ -6,18 +6,20 @@ const InputMessage = ({ textInputRef, handleSubmit }) => {
     <div className="row">
       <form className="text-center" onSubmit={handleSubmit}>
         <input
-          ref={textInputRef}
+          className="publisher-input"
           type="text"
+          ref={textInputRef}
           required
           className="input"
           placeholder="Write a message..."
-        ></input>
-        <button>SEND</button>
+        ></input>{" "}
+        <a className="publisher-btn text-info" href="#" data-abc="true">
+          <button>SEND</button>
+          <i className="fa fa-paper-plane"></i>
+        </a>
       </form>
     </div>
   );
 };
 
 export default InputMessage;
-
-
