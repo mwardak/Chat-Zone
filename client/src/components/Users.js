@@ -1,10 +1,12 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const Users = ({ users }) => {
-  const chatUsers = users.map((user) => {
-    return <p>{user.name}</p>;
-  });
+  let chatUsers;
+  if (users) {
+    chatUsers = users.map((user) => {
+      return <p>{user.name}</p>;
+    });
+  }
 
   return (
     <div className="col-md-3 pr-0">
@@ -13,20 +15,36 @@ const Users = ({ users }) => {
           <h4 className="card-title">
             <strong>Users</strong>
           </h4>
-          <div
-            className="ps-container ps-theme-default ps-active-y"
-            id="chat-content"
-            style={{
-              overflow: "scroll !important",
-              height: "400px !important",
-            }}
-          >
-            <div className="media media-chat">
-              <div>
-                <p>{chatUsers}</p>
-
-                <p className="meta"></p>
-              </div>
+        </div>
+        <div
+          className="ps-container ps-theme-default ps-active-y"
+          id="chat-content"
+          style={{
+            overflow: "scroll !important",
+            height: "400px !important",
+          }}
+        >
+          <div className="media media-chat">
+            <div>
+              <p>Maher</p>
+              <p>Adam</p>
+              <p>Mike</p>
+              <p>{chatUsers}</p>
+              <p className="meta"></p>
+            </div>
+          </div>
+        </div>
+        <div
+          className="ps-container ps-theme-default ps-active-y"
+          id="chat-content"
+          style={{
+            overflow: "scroll !important",
+            height: "400px !important",
+          }}
+        >
+          <div className="media media-chat">
+            <div className="media-body">
+              <p className="meta"></p>
             </div>
           </div>
         </div>

@@ -1,24 +1,23 @@
 import React from "react";
 
-
 const InputMessage = ({ textInputRef, handleSubmit }) => {
   return (
-    <div className="row">
-      <form className="text-center" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <div className="publisher bt-1 border-light">
+        {" "}
         <input
-          className="publisher-input"
-          type="text"
           ref={textInputRef}
+          type="text"
           required
-          className="input"
+          className="publisher-input"
           placeholder="Write a message..."
         ></input>{" "}
         <a className="publisher-btn text-info" href="#" data-abc="true">
           <button>SEND</button>
           <i className="fa fa-paper-plane"></i>
         </a>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
