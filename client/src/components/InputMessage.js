@@ -14,7 +14,6 @@ const InputMessage = ({ textInputRef, handleSubmit }) => {
         ></input>{" "}
         <a className="publisher-btn text-info" href="#" data-abc="true">
           <button>SEND</button>
-          <i className="fa fa-paper-plane"></i>
         </a>
       </div>
     </form>

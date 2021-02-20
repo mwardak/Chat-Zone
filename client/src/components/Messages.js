@@ -33,6 +33,7 @@ const Messages = ({ messages }) => {
                   <div className="media-body">
                     <p>Hi, I'm good.</p>
                     <p>How are you doing?</p>
+                    <p>{chatMessages}</p>
                     <p className="meta"></p>
                   </div>
                 </div>

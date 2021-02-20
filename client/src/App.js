@@ -50,15 +50,17 @@ const App = () => {
   return (
     <div className="page-content page-container" id="page-content">
       <div className="padding">
-      
-        
         <div className="container d-flex justify-content-center">
-        <Users />
-        <Messages />
-        
+          <Users users={users} />
+          <Messages messages={messages} />
         </div>
-        <InputMessage />
-       
+
+        <div className="container d-flex justify-content-center">
+          <InputMessage
+            handleSubmit={handleSubmit}
+            textInputRef={textInputRef}
+          />
+        </div>
       </div>
     </div>
   );

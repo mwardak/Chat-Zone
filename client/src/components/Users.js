@@ -26,7 +26,6 @@ const Users = ({ users }) => {
         >
           <div className="media media-chat">
             <div>
-              <p>Maher</p>
               <p>Adam</p>
               <p>Mike</p>
               <p>{chatUsers}</p>
@@ -34,22 +33,12 @@ const Users = ({ users }) => {
             </div>
           </div>
         </div>
-        <div
-          className="ps-container ps-theme-default ps-active-y"
-          id="chat-content"
-          style={{
-            overflow: "scroll !important",
-            height: "400px !important",
-          }}
-        >
-          <div className="media media-chat">
-            <div className="media-body">
-              <p className="meta"></p>
-            </div>
-          </div>
+
+        
+          
         </div>
       </div>
-    </div>
+   
   );
 };
 
