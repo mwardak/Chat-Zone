@@ -4,6 +4,8 @@ import Style from "./Style.css";
 import Users from "./components/Users";
 import Messages from "./components/Messages";
 import InputMessage from "./components/InputMessage";
+import LoginForm from "./components/LoginForm";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -48,21 +50,27 @@ const App = () => {
   };
 
   return (
-    <div className="page-content page-container" id="page-content">
-      <div className="padding">
-        <div className="container d-flex justify-content-center">
-          <Users users={users} />
-          <Messages messages={messages} />
-        </div>
+    <Router>
+      <Switch>
+        <Route path="/loginform" component={LoginForm} />
 
-        <div className="container d-flex justify-content-center">
-          <InputMessage
-            handleSubmit={handleSubmit}
-            textInputRef={textInputRef}
-          />
+        <div className="page-content page-container" id="page-content">
+          <div className="padding">
+            <div className="container d-flex justify-content-center">
+              <Users users={users} />
+              <Messages messages={messages} />
+            </div>
+
+            <div className="container d-flex justify-content-center">
+              <InputMessage
+                handleSubmit={handleSubmit}
+                textInputRef={textInputRef}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </Switch>
+    </Router>
   );
 };
 export default App;

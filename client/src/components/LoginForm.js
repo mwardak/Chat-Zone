@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const LoginForm = ({ users }) => {
+const LoginForm = ({  }) => {
   return (
     <form>
       <div class="form-group">
