@@ -13,9 +13,14 @@ const app = express();
 
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
+// LoginForm
 
 // ROUTES
+app.get("/api/loginform", async (req, res) => {
+  
 
+  res.json(allMessages.rows);
+});
 // Get all messages
 app.get("/api/messages", async (req, res) => {
   const allMessages = await pool.query("SELECT messages FROM users");
