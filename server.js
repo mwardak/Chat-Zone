@@ -13,10 +13,23 @@ const app = express();
 
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
+
+// catch all route
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+}); 
+
+
 // LoginForm
 
 // ROUTES
-app.get("/api/loginform", async (req, res) => {
+// app.post("/api/loginform", async (req, res) => {
+  
+
+//   res.json();
+// });
+
+app.get("/api/chat", async (req, res) => {
   
 
   res.json(allMessages.rows);
@@ -81,6 +94,8 @@ app.get("/api/users/:id", async (req, res) => {
     console.log(err);
   }
 });
+
+
 
 // // This is how you specify a route path/URL with "/" and a callback/route handler
 // app.get("/api/users/:id", (req, res) => {

@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const Messages = ({ messages }) => {
   let chatMessages;
   if (messages) {
@@ -30,17 +31,16 @@ const Messages = ({ messages }) => {
             <p class="meta"></p>
           </div>
           <div className="media media-chat media-chat-reverse">
-                  <div className="media-body">
-                    <p>Hi, I'm good.</p>
-                    <p>How are you doing?</p>
-                    <p>{chatMessages}</p>
-                    <p className="meta"></p>
-                  </div>
-                </div>
-                </div>
+            <div className="media-body">
+              <p>Hi, I'm good.</p>
+              <p>How are you doing?</p>
+              <p>{chatMessages}</p>
+              <p className="meta"></p>
+            </div>
+          </div>
         </div>
       </div>
-   
+    </div>
   );
 };
 
