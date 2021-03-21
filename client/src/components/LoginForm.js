@@ -1,29 +1,30 @@
 import React from "react";
-import React, { useState, useRef, useEffect }  from "react";
+import axios from "axios";
+import React, { useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const LoginForm = ({  }) => {
-  const [email, setEmail] = useState([]);
-  const [password, setPassword] = useState([]);
+const LoginForm = ({}) => {
+  let emailInputRef = useRef();
+  let passwordInputRef = useRef();
 
-  let textInputRef = useRef();
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setEmail([{ email: textInputRef.current.value}]);
-    textInputRef.current.value = "";
+    // send http reqeuest to server wit pasword/email to check and validate
+    const authenticateUser = await axios.post("/api/loginform", {email: emailInputRef.current.value});
+
+  };
 
   return (
-    <form className="container">
+    <form className="container" onSubmit={handleSubmit}>
       <div className="form-group">
         <label>Email Address</label>
         <input
-          handleSubmit={handleSubmit}
           type="email"
           className="form-control"
           id="email"
           aria-describedby="email"
           placeholder="Email..."
+          ref={emailInputRef}
         ></input>
       </div>
       <div className="form-group">
@@ -33,6 +34,7 @@ const LoginForm = ({  }) => {
           className="form-control"
           id="password"
           placeholder="Password..."
+          ref={passwordInputRef}
         ></input>
       </div>
 

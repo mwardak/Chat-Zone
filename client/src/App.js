@@ -1,8 +1,8 @@
-import Style from "./Style.css";
 import LoginForm from "./components/LoginForm";
 import ChatPage from "./components/ChatPage";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./Style.css";
 
 const App = () => {
   let isLoggedIn = false;
