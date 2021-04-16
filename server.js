@@ -23,17 +23,18 @@ app.get("/*", (req, res) => {
 // LoginForm
 
 // ROUTES
-// app.post("/api/loginform", async (req, res) => {
+app.post("/api/loginform", async (req, res) => {
   
+// check if the email/password matches a user in the DB
 
-//   res.json();
-// });
-
-app.get("/api/chat", async (req, res) => {
-  
-
-  res.json(allMessages.rows);
+//if not send not authorized status 403
+res.status(403).json({errorMessage: "invalid email or password"})
+ 
+//ELSE sucucessful status
+res.json({});
 });
+
+
 // Get all messages
 app.get("/api/messages", async (req, res) => {
   const allMessages = await pool.query("SELECT messages FROM users");

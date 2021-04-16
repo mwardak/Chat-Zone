@@ -1,18 +1,45 @@
-import React from "react";
-import axios from "axios";
 import React, { useRef } from "react";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const LoginForm = ({}) => {
+const LoginForm = () => {
   let emailInputRef = useRef();
   let passwordInputRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // send http reqeuest to server wit pasword/email to check and validate
-    const authenticateUser = await axios.post("/api/loginform", {email: emailInputRef.current.value});
+    // send http reqeuest to server with email & password to check and validate on the server
+
+    const loginResponse = await axios.post("/api/loginform",
+      { email: emailInputRef.current.value },
+      { password: passwordInputRef.current.value }
+    );
+
+    // store a response from the http request below in variable called response
+    const user = loginResponse.data;
+
+    // store userID in local storage
+
+    //if user is loged in and exists in database, redirect to chatpage
+    if (response.statusCode === 201) {
+      // redirect to chatpage
+    }
+
+    /**
+     * if user is registering send post request to database and insert email and password into table
+     * when response comes back from databse store in variable
+     * then redirect to login page
+     */
+    
+     const registerResponse = await axios.post("/api/register",
+     { email: emailInputRef.current.value },
+     { password: passwordInputRef.current.value }
+   );
+
+   const registeredUser = response.data;
 
   };
+
 
   return (
     <form className="container" onSubmit={handleSubmit}>

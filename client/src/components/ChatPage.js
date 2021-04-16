@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useRef, useEffect }  from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Users from "./Users";
 import Messages from "./Messages";
 import InputMessage from "./InputMessage";
@@ -43,10 +43,7 @@ const ChatPage = ({}) => {
         </div>
 
         <div className="container d-flex justify-content-center">
-          <InputMessage
-            handleSubmit={handleSubmit}
-            textInputRef={textInputRef}
-          />
+          <InputMessage handleSubmit={handleSubmit} />
         </div>
       </div>
     </div>
