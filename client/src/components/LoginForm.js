@@ -17,11 +17,12 @@ const LoginForm = () => {
 
     // store a response from the http request below in variable called response
     const user = loginResponse.data;
+    
 
     // store userID in local storage
-
+    localStorage.setItem("userID", JSON.stringify(user))
     //if user is loged in and exists in database, redirect to chatpage
-    if (response.statusCode === 201) {
+    if (loginResponse.statusCode === 201) {
       // redirect to chatpage
     }
 

@@ -25,6 +25,9 @@ app.get("/*", (req, res) => {
 // ROUTES
 app.post("/api/loginform", async (req, res) => {
   
+  //insert new email and password into database
+
+  
 // check if the email/password matches a user in the DB
 
 //if not send not authorized status 403
