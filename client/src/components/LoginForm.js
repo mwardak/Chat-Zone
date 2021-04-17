@@ -40,10 +40,7 @@ const LoginForm = () => {
      * then redirect to login page
      */
     
-     const registerResponse = await axios.post("/api/register",
-     { email: emailInputRef.current.value },
-     { password: passwordInputRef.current.value }
-   );
+  
 
    const registeredUser = response.data;
 
@@ -77,6 +74,9 @@ const LoginForm = () => {
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
+      <p>
+        Don't have an account? <Link to="/register">REGISTER</Link>
+      </p>
     </form>
   );
 };
