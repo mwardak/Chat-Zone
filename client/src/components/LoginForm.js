@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { json } from "express";
 
 const LoginForm = () => {
   let emailInputRef = useRef();
@@ -17,12 +18,15 @@ const LoginForm = () => {
 
     // store a response from the http request below in variable called response
     const user = loginResponse.data;
-    
+
 
     // store userID in local storage
-    localStorage.setItem("userID", JSON.stringify(user))
+    localStorage.setItem("userId", JSON.stringify(user))
+    const result = localStorage.getItem("userId")
+    JSON.parse(result);
+    
     //if user is loged in and exists in database, redirect to chatpage
-    if (loginResponse.statusCode === 201) {
+    if (user.statusCode === 201) {
       // redirect to chatpage
     }
 
