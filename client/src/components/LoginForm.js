@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { json } from "express";
 
@@ -24,15 +25,18 @@ const LoginForm = () => {
     localStorage.setItem("userId", JSON.stringify(user))
     const result = localStorage.getItem("userId")
     JSON.parse(result);
-    
+
     //if user is loged in and exists in database, redirect to chatpage
     if (user.statusCode === 201) {
       // redirect to chatpage
+      return (
+        <Route path="/chat" component={ChatPage} />
+      )
     }
 
     /**
-     * if user is registering send post request to database and insert email and password into table
-     * when response comes back from databse store in variable
+     * if new user is registering send post request to database and insert email and password into table
+     * when response comes back from databse store in variable and store in local storage
      * then redirect to login page
      */
     
