@@ -69,14 +69,14 @@ app.get("/api/users", async (req, res) => {
   res.json(allUsers.rows);
 });
 
-// Create a user
-app.post("/api/users", async (req, res) => {
+// Register user
+app.post("/api/register", async (req, res) => {
   try {
-    const createNewUser = req.body;
+    const body = req.body;
 
     const newUser = await pool.query(
-      "INSERT INTO users(name) VALUES($1) RETURNING *",
-      [createNewUser]
+      "INSERT INTO users VALUES($1, $2, $3, $4) RETURNING *",
+      [body.email, body.password, body.firstName, body.lastName]
     );
 
     res.json(newUser.rows[0]);

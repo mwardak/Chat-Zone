@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import axios from "axios";
+import LoginForm from "./components/LoginForm";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { json } from "express";
 
 const Register = () => {
   let firstNameRef = useRef();
@@ -11,50 +11,49 @@ const Register = () => {
   let passwordInputRef = useRef();
 
   /**
-     * if new user is registering send post request to database and insert email and password into table
-     * when response comes back from databse store in variable and store in local storage
-     * then redirect to login page
-     */
+   * if new user is registering send post request to database and insert email and password into table
+   * then redirect to login page
+   */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // send http reqeuest to server with credentials below to insert into table
 
-    const registerResponse = await axios.post("/api/loginform",
+    const registerResponse = await axios.post("/api/register",
       { firstName: firstNameRef.current.value },
       { lastName: firstNameRef.current.value },
       { email: emailInputRef.current.value },
       { password: passwordInputRef.current.value }
-  )};
+      
+    );
 
-    // store a response from the http request below in variable called response
-    const user = registerResponse.data;
+    //redirect to root 
+    return(
+    <Route exact path="/" component={LoginForm} />
+    )
+  };
 
-    
-
-
-  
   return (
     <form className="container" onSubmit={handleSubmit}>
-        <div className="form-group">
+      <div className="form-group">
         <label>First Name</label>
         <input
-          type="email"
+          type="firsName"
           className="form-control"
-          id="email"
-          aria-describedby="email"
-          placeholder="Email..."
+          id="firsName"
+          aria-describedby="firstName"
+          placeholder="Firs Name..."
           ref={firstNameRef}
         ></input>
       </div>
-        <div className="form-group">
+      <div className="form-group">
         <label>Last Name</label>
         <input
-          type="email"
+          type="lastName"
           className="form-control"
-          id="email"
-          aria-describedby="email"
-          placeholder="Email..."
+          id="lastName"
+          aria-describedby="lastName"
+          placeholder="Last Name..."
           ref={lastNameRef}
         ></input>
       </div>
@@ -83,8 +82,9 @@ const Register = () => {
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
+      
       <p>
-        Already have an account? <Link to="/login">LOGIN</Link>
+        Already have an account? <Link to="/">LOGIN</Link>
       </p>
     </form>
   );

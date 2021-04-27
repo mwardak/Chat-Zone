@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { json } from "express";
 
 const LoginForm = () => {
   let emailInputRef = useRef();
@@ -12,7 +11,8 @@ const LoginForm = () => {
     e.preventDefault();
     // send http reqeuest to server with email & password to check and validate on the server
 
-    const loginResponse = await axios.post("/api/loginform",
+    const loginResponse = await axios.post(
+      "/api/loginform",
       { email: emailInputRef.current.value },
       { password: passwordInputRef.current.value }
     );
@@ -20,32 +20,17 @@ const LoginForm = () => {
     // store a response from the http request below in variable called response
     const user = loginResponse.data;
 
-
     // store userID in local storage
-    localStorage.setItem("userId", JSON.stringify(user))
-    const result = localStorage.getItem("userId")
+    localStorage.setItem("userId", JSON.stringify(user));
+    const result = localStorage.getItem("userId");
     JSON.parse(result);
 
     //if user is loged in and exists in database, redirect to chatpage
     if (user.statusCode === 201) {
       // redirect to chatpage
-      return (
-        <Route path="/chat" component={ChatPage} />
-      )
+      return <Route path="/chat" component={ChatPage} />;
     }
-
-    /**
-     * if new user is registering send post request to database and insert email and password into table
-     * when response comes back from databse store in variable and store in local storage
-     * then redirect to login page
-     */
-    
-  
-
-   const registeredUser = response.data;
-
   };
-
 
   return (
     <form className="container" onSubmit={handleSubmit}>
@@ -74,6 +59,7 @@ const LoginForm = () => {
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
+
       <p>
         Don't have an account? <Link to="/register">REGISTER</Link>
       </p>
