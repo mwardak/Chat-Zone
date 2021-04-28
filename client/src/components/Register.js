@@ -17,21 +17,21 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const body = {
+      firstName: firstNameRef.current.value,
+      lastName: firstNameRef.current.value,
+      email: emailInputRef.current.value,
+      password: passwordInputRef.current.value,
+    };
     // send http reqeuest to server with credentials below to insert into table
-
-    const registerResponse = await axios.post("/api/register",
-      { firstName: firstNameRef.current.value },
-      { lastName: firstNameRef.current.value },
-      { email: emailInputRef.current.value },
-      { password: passwordInputRef.current.value }
-      
-    );
-
-    //redirect to root 
-    return(
-    <Route exact path="/" component={LoginForm} />
-    )
+  await axios.post("/api/register", body);
   };
+  //redirect to root
+  //   return(
+  //   <Route exact path="/" component={LoginForm} />
+  //   )
+  // };
 
   return (
     <form className="container" onSubmit={handleSubmit}>
@@ -82,7 +82,7 @@ const Register = () => {
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
-      
+
       <p>
         Already have an account? <Link to="/">LOGIN</Link>
       </p>

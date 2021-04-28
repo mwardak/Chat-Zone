@@ -2,9 +2,10 @@ CREATE DATABASE chat;
 
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(225) NOT NULL,
-    messages VARCHAR(225) NOT NULL,
-    password VARCHAR(200) NOT NULL,
-    UNIQUE (email)
+    firstName VARCHAR(225) NOT NULL,
+    lastName VARCHAR(225) NOT NULL,
+    email VARCHAR(225) NOT NULL,
+    password VARCHAR(225) NOT NULL
+    
     );
 

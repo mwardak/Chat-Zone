@@ -72,11 +72,11 @@ app.get("/api/users", async (req, res) => {
 // Register user
 app.post("/api/register", async (req, res) => {
   try {
-    const body = req.body;
+    const {firstName, lastName, email, password, } = req.body;
 
     const newUser = await pool.query(
-      "INSERT INTO users VALUES($1, $2, $3, $4) RETURNING *",
-      [body.email, body.password, body.firstName, body.lastName]
+      "INSERT INTO users(firstName, lastName, email, password) VALUES($1, $2, $3, $4) RETURNING *",
+      [firstName, lastName, email, password]
     );
 
     res.json(newUser.rows[0]);
