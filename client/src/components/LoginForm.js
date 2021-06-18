@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -28,7 +29,8 @@ const LoginForm = () => {
     //if user is loged in and exists in database, redirect to chatpage
     if (user.statusCode === 201) {
       // redirect to chatpage
-      return <Route path="/chat" component={ChatPage} />;
+      let history = useHistory();
+      history.push("/chat");
     }
   };
 
@@ -36,7 +38,8 @@ const LoginForm = () => {
     <form className="container" onSubmit={handleSubmit}>
       <div className="form-group">
         <label>Email Address</label>
-        <input
+        <input  
+          required
           type="email"
           className="form-control"
           id="email"
@@ -48,6 +51,7 @@ const LoginForm = () => {
       <div className="form-group">
         <label>Password</label>
         <input
+          required
           type="password"
           className="form-control"
           id="password"

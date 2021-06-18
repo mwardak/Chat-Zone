@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import axios from "axios";
-import LoginForm from "./components/LoginForm";
+import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -28,16 +28,16 @@ const Register = () => {
   await axios.post("/api/register", body);
   };
   //redirect to root
-  //   return(
-  //   <Route exact path="/" component={LoginForm} />
-  //   )
-  // };
+  let history = useHistory();
+  history.push("/");
+  
 
   return (
     <form className="container" onSubmit={handleSubmit}>
       <div className="form-group">
         <label>First Name</label>
         <input
+          required
           type="firsName"
           className="form-control"
           id="firsName"
@@ -49,6 +49,7 @@ const Register = () => {
       <div className="form-group">
         <label>Last Name</label>
         <input
+          required
           type="lastName"
           className="form-control"
           id="lastName"
@@ -60,6 +61,7 @@ const Register = () => {
       <div className="form-group">
         <label>Email Address</label>
         <input
+          required
           type="email"
           className="form-control"
           id="email"
@@ -71,6 +73,7 @@ const Register = () => {
       <div className="form-group">
         <label>Password</label>
         <input
+          required
           type="password"
           className="form-control"
           id="password"

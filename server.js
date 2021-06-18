@@ -38,7 +38,7 @@ res.json({});
 });
 
 
-// Get all messages
+// Get all  chat messages
 app.get("/api/messages", async (req, res) => {
   const allMessages = await pool.query("SELECT messages FROM users");
 
