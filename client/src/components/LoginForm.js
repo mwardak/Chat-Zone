@@ -7,7 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const LoginForm = () => {
   let emailInputRef = useRef();
   let passwordInputRef = useRef();
-
+  let history = useHistory();
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     // send http reqeuest to server with email & password to check and validate on the server
@@ -20,7 +21,7 @@ const LoginForm = () => {
 
     // store a response from the http request below in variable called response
     const user = loginResponse.data;
-
+    console.log(user);
     // store userID in local storage
     localStorage.setItem("userId", JSON.stringify(user));
     const result = localStorage.getItem("userId");
@@ -28,12 +29,14 @@ const LoginForm = () => {
 
     //if user is loged in and exists in database, redirect to chatpage
     if (user.statusCode === 201) {
+      console.log(user);
       // redirect to chatpage
-      let history = useHistory();
+      
       history.push("/chat");
     }
   };
 
+  
   return (
     <form className="container" onSubmit={handleSubmit}>
       <div className="form-group">
@@ -63,7 +66,7 @@ const LoginForm = () => {
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
-
+      {""}
       <p>
         Don't have an account? <Link to="/register">REGISTER</Link>
       </p>

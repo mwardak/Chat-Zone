@@ -9,7 +9,7 @@ const Register = () => {
   let lastNameRef = useRef();
   let emailInputRef = useRef();
   let passwordInputRef = useRef();
-
+  let history = useHistory();
   /**
    * if new user is registering send post request to database and insert email and password into table
    * then redirect to login page
@@ -26,10 +26,10 @@ const Register = () => {
     };
     // send http reqeuest to server with credentials below to insert into table
   await axios.post("/api/register", body);
-  };
-  //redirect to root
-  let history = useHistory();
   history.push("/");
+  };
+  
+  
   
 
   return (

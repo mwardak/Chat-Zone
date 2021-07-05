@@ -17,26 +17,26 @@ app.use(express.json());
 // catch all route
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-}); 
-
-
-// LoginForm
-
-// ROUTES
-app.post("/api/loginform", async (req, res) => {
-  
-  //insert new email and password into database
-
-  
-// check if the email/password matches a user in the DB
-
-//if not send not authorized status 403
-res.status(403).json({errorMessage: "invalid email or password"})
- 
-//ELSE sucucessful status
-res.json({});
 });
 
+// LoginForm
+app.post("/api/loginform", async (req, res) => {
+  //insert new email and password into database
+  const { email, password } = req.body;
+
+  const newUser = await pool.query(
+    "INSERT INTO users(email, password) VALUES($1, $2) RETURNING *",
+    [email, password]
+  );
+
+  // check if the email/password matches a user in the DB
+  //if not send not authorized status 403
+  if (res.status === 403) {
+    return res.status(403).json({ errorMessage: "invalid email or password" });
+  }
+ //ELSE sucucessful status
+  res.json(newUser.rows);
+});
 
 // Get all  chat messages
 app.get("/api/messages", async (req, res) => {
@@ -72,7 +72,7 @@ app.get("/api/users", async (req, res) => {
 // Register user
 app.post("/api/register", async (req, res) => {
   try {
-    const {firstName, lastName, email, password, } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     const newUser = await pool.query(
       "INSERT INTO users(firstName, lastName, email, password) VALUES($1, $2, $3, $4) RETURNING *",
@@ -98,8 +98,6 @@ app.get("/api/users/:id", async (req, res) => {
     console.log(err);
   }
 });
-
-
 
 // // This is how you specify a route path/URL with "/" and a callback/route handler
 // app.get("/api/users/:id", (req, res) => {
