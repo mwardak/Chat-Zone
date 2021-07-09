@@ -17,23 +17,22 @@ const LoginForm = () => {
       password: passwordInputRef.current.value,
     };
 
-    console.log(loginBody);
-
     const loginResponse = await axios.post("/api/loginform", loginBody);
+    
 
     // store a response from the http request below in variable called response
     const user = loginResponse.data;
-    
+    console.log(user);
+
+   
     // store userID in local storage
     localStorage.setItem("userId", JSON.stringify(user));
     const result = localStorage.getItem("userId");
     JSON.parse(result);
 
-    //if user is loged in and exists in database, redirect to chatpage
-    if (user.statusCode === 201) {
-     
+    //if user is logged in and exists in database, redirect to chatpage
+    if (loginResponse.status === 200) {
       // redirect to chatpage
-
       history.push("/chat");
     }
   };

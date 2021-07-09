@@ -27,10 +27,11 @@ app.post("/api/loginform", async (req, res) => {
 
   try {
     const newUser = await pool.query(
-      "SELECT * FROM users(email, password) VALUES($1, $2) RETURNING *",
+      "SELECT * FROM users WHERE email = $1 AND password = $2",
       [email, password]
     );
     console.log(newUser.rows);
+
     res.json(newUser.rows);
   } catch (err) {
     res.status(403).send(err.message);
