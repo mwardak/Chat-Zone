@@ -10,8 +10,10 @@ const Register = () => {
   let emailInputRef = useRef();
   let passwordInputRef = useRef();
   let history = useHistory();
+
+ 
   /**
-   * if new user is registering send post request to database and insert email and password into table
+   * if new user is registering send post request to database and insert first, lastname, email and password into table
    * then redirect to login page
    */
 
@@ -24,6 +26,8 @@ const Register = () => {
       email: emailInputRef.current.value,
       password: passwordInputRef.current.value,
     };
+
+   
     // send http reqeuest to server with credentials below to insert into table
   await axios.post("/api/register", body);
   history.push("/");

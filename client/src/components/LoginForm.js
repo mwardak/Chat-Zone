@@ -8,20 +8,22 @@ const LoginForm = () => {
   let emailInputRef = useRef();
   let passwordInputRef = useRef();
   let history = useHistory();
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // send http reqeuest to server with email & password to check and validate on the server
+    const loginBody = {
+      email: emailInputRef.current.value,
+      password: passwordInputRef.current.value,
+    };
 
-    const loginResponse = await axios.post(
-      "/api/loginform",
-      { email: emailInputRef.current.value },
-      { password: passwordInputRef.current.value }
-    );
+    console.log(loginBody);
+
+    const loginResponse = await axios.post("/api/loginform", loginBody);
 
     // store a response from the http request below in variable called response
     const user = loginResponse.data;
-    console.log(user);
+    
     // store userID in local storage
     localStorage.setItem("userId", JSON.stringify(user));
     const result = localStorage.getItem("userId");
@@ -29,19 +31,18 @@ const LoginForm = () => {
 
     //if user is loged in and exists in database, redirect to chatpage
     if (user.statusCode === 201) {
-      console.log(user);
+     
       // redirect to chatpage
-      
+
       history.push("/chat");
     }
   };
 
-  
   return (
     <form className="container" onSubmit={handleSubmit}>
       <div className="form-group">
         <label>Email Address</label>
-        <input  
+        <input
           required
           type="email"
           className="form-control"

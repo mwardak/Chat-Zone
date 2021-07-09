@@ -21,21 +21,24 @@ app.get("/*", (req, res) => {
 
 // LoginForm
 app.post("/api/loginform", async (req, res) => {
-  //insert new email and password into database
-  const { email, password } = req.body;
-
-  const newUser = await pool.query(
-    "INSERT INTO users(email, password) VALUES($1, $2) RETURNING *",
-    [email, password]
-  );
-
   // check if the email/password matches a user in the DB
   //if not send not authorized status 403
-  if (res.status === 403) {
-    return res.status(403).json({ errorMessage: "invalid email or password" });
+  const { email, password } = req.body;
+
+  try {
+    const newUser = await pool.query(
+      "SELECT * FROM users(email, password) VALUES($1, $2) RETURNING *",
+      [email, password]
+    );
+    console.log(newUser.rows);
+    res.json(newUser.rows);
+  } catch (err) {
+    res.status(403).send(err.message);
   }
- //ELSE sucucessful status
-  res.json(newUser.rows);
+
+  
+
+  //ELSE sucucessful status
 });
 
 // Get all  chat messages
