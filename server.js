@@ -44,9 +44,11 @@ app.post("/api/loginform", async (req, res) => {
 
 // Get all  chat messages
 app.get("/api/messages", async (req, res) => {
-  const allMessages = await pool.query("SELECT messages FROM users");
+  // const allMessages = await pool.query("SELECT messages FROM users");
 
-  res.json(allMessages.rows);
+  // res.json(allMessages.rows);
+
+  res.json([]);
 });
 
 // Create a chat message
@@ -68,9 +70,10 @@ app.post("/api/messages", async (req, res) => {
 
 // Get all users
 app.get("/api/users", async (req, res) => {
-  const allUsers = await pool.query("SELECT name FROM users");
+  // const allUsers = await pool.query("SELECT name FROM users");
 
-  res.json(allUsers.rows);
+  // res.json(allUsers.rows);
+  res.json([]);
 });
 
 // Register user

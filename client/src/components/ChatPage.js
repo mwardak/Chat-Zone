@@ -13,13 +13,13 @@ const ChatPage = ({}) => {
   const fetchUser = async () => {
     const userResponse1 = await axios.get("/api/users");
 
-    setUsers(userResponse1.data);
+    // setUsers(userResponse1.data);
   };
 
   const fetchMessage = async () => {
     const messageResponse1 = await axios.get("/api/messages");
 
-    setMessages(messageResponse1.data);
+    // setMessages(messageResponse1.data);
   };
 
   useEffect(() => {

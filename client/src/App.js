@@ -1,24 +1,33 @@
+import React, { useState } from "react";
 import LoginForm from "./components/LoginForm";
 import ChatPage from "./components/ChatPage";
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Style.css";
 import Register from "./components/Register";
 
 const App = () => {
-  let isLoggedIn = false;
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!JSON.parse(localStorage.getItem("userId"))
+  );
 
   return (
     <Router>
       <Switch>
-        {isLoggedIn ? (
-          <Route path="/chat" component={ChatPage} />
-        ) : (
-          <div>
-          <Route exact path="/" component={LoginForm} />
-          <Route exact path="/register" component={Register} />
-          </div>
-        )}
+        <Route
+          path="/chat"
+          render={() => {
+            return isLoggedIn ? <ChatPage /> : <Redirect to="/" />;
+          }}
+        />
+
+        <Route exact path="/" component={LoginForm} />
+        <Route exact path="/register" component={Register} />
       </Switch>
     </Router>
   );
