@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import LoginForm from "./components/LoginForm";
 import ChatPage from "./components/ChatPage";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect,} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Style.css";
 import Register from "./components/Register";
