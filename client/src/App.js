@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import LoginForm from "./components/LoginForm";
 import ChatPage from "./components/ChatPage";
-import { BrowserRouter as Router, Switch, Route, Redirect,} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Style.css";
 import Register from "./components/Register";
@@ -17,11 +22,25 @@ const App = () => {
         <Route
           path="/chat"
           render={() => {
-            return isLoggedIn ? <ChatPage /> : <Redirect to="/" />;
+            return isLoggedIn ? (
+              <ChatPage setIsLoggedIn={setIsLoggedIn} />
+            ) : (
+              <Redirect to="/" />
+            );
           }}
         />
 
-        <Route exact path="/" component={LoginForm} />
+        <Route
+          exact
+          path="/"
+          render={() => {
+            return isLoggedIn ? (
+              <Redirect to="/chat" />
+            ) : (
+              <LoginForm setIsLoggedIn={setIsLoggedIn} />
+            );
+          }}
+        />
         <Route exact path="/register" component={Register} />
       </Switch>
     </Router>
