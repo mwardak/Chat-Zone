@@ -1,10 +1,10 @@
 const express = require("express");
 const path = require("path");
-// const socket = require("socket.io");
 const pool = require("./db");
 
+// const socket = require("socket.io");
+// const server = http.craeateServer(app);
 // const io = socket(server);
-
 // io.on("connection", socket => {
 //   socket.emit("chat-message", "hello world")
 // });
