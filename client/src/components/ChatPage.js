@@ -3,7 +3,10 @@ import React, { useState, useRef, useHistory, useEffect } from "react";
 import Users from "./Users";
 import Messages from "./Messages";
 import InputMessage from "./InputMessage";
+import { io } from "socket.io-client";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+
 
 const ChatPage = ({setIsLoggedIn}) => {
  

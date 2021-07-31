@@ -1,15 +1,17 @@
 const express = require("express");
 const path = require("path");
 const pool = require("./db");
+const http = require("http");
 
-// const socket = require("socket.io");
-// const server = http.craeateServer(app);
-// const io = socket(server);
-// io.on("connection", socket => {
-//   socket.emit("chat-message", "hello world")
-// });
-
+const socket = require("socket.io");
 const app = express();
+const server = http.createServer(app);
+const io = socket(server);
+io.on("connection", (socket) => {
+  socket.emit("chat-message", "hello world")
+});
+
+
 
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
