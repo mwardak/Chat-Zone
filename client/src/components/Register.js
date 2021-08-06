@@ -22,7 +22,7 @@ const Register = () => {
 
     const body = {
       firstName: firstNameRef.current.value,
-      lastName: firstNameRef.current.value,
+      lastName: lastNameRef.current.value,
       email: emailInputRef.current.value,
       password: passwordInputRef.current.value,
     };

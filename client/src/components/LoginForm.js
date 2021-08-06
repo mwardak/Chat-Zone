@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const LoginForm = () => {
+const LoginForm = ({setIsLoggedIn}) => {
   let emailInputRef = useRef();
   let passwordInputRef = useRef();
   let history = useHistory();
@@ -33,7 +33,7 @@ const LoginForm = () => {
     //if user is logged in and exists in database, redirect to chatpage
     if (loginResponse.status === 200) {
       // redirect to chatpage
-      history.push("/chat");
+      setIsLoggedIn(true);
     }
   };
 

@@ -9,6 +9,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 
 const ChatPage = ({setIsLoggedIn}) => {
+
+  const socket = io();
+
+  socket.on("message", (message) => {
+    console.log(message);
+  });
  
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);

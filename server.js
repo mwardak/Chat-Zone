@@ -7,9 +7,21 @@ const socket = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 const io = socket(server);
+
+//Run when user connects
 io.on("connection", (socket) => {
-  socket.emit("chat-message", "hello world")
+  socket.emit("message", "Welcome to ChatZone");
+
+  socket.broadcast.emit("message", "New user has joined the chat");
+  
+  //Runs when user disconnects
+  socket.on("disconnect", () => {
+    io.emit("message", "User has left the chat");
+    console.log("User has left");
+  })
 });
+
+
 
 
 
@@ -117,7 +129,7 @@ app.get("/api/users/:id", async (req, res) => {
 
 // Environtment variable for hosting
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`server listening on port ${port}`);
 });
 
