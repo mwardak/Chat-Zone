@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginForm = ({setIsLoggedIn}) => {
   let emailInputRef = useRef();
   let passwordInputRef = useRef();
-  let history = useHistory();
+  // let history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

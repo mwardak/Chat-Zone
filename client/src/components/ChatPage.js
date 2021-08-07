@@ -60,11 +60,11 @@ const ChatPage = ({setIsLoggedIn}) => {
       <div className="padding">
         <div className="container d-flex justify-content-center">
           <Users users={users} />
-          <Messages messages={messages} />
+          <Messages  messages={messages} />
         </div>
 
         <div className="container d-flex justify-content-center">
-          <InputMessage handleSubmit={handleSubmit} />
+          <InputMessage textInputRef={textInputRef} handleSubmit={handleSubmit} />
         </div>
       </div>
     </div>
