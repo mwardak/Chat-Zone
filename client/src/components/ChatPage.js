@@ -21,7 +21,7 @@ const ChatPage = ({setIsLoggedIn}) => {
 
   const fetchUser = async () => {
     const userResponse1 = await axios.get("/api/users");
-
+    debugger;
     setUsers(userResponse1.data);
   };
 

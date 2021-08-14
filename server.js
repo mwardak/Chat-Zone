@@ -28,10 +28,7 @@ io.on("connection", (socket) => {
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
 
-// catch all route
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
+
 
 // LoginForm
 app.post("/api/loginform", async (req, res) => {
@@ -118,6 +115,11 @@ app.get("/api/users/:id", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+// catch all route
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 // // This is how you specify a route path/URL with "/" and a callback/route handler
