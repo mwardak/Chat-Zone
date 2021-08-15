@@ -3,7 +3,7 @@ import React from "react";
 const Users = ({ users }) => {
   let chatUsers;
   if (users) {
-    debugger;
+    
     chatUsers = users.map((user) => {
       return <p>{user.name}</p>;
     });

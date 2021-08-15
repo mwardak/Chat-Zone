@@ -66,11 +66,11 @@ app.get("/api/messages", async (req, res) => {
 app.post("/api/messages", async (req, res) => {
   try {
     // const userId = req.params;
-    const chatMessage = req.body;
+    const {userId, text, date} = req.body;
 
     const newMessage = await pool.query(
-      "INSERT INTO messages(message) VALUES($1) RETURNING *",
-      [chatMessage]
+      "INSERT INTO messages(message_id, text, created_date) VALUES($1, $2, $3) RETURNING *",
+      [userId, text, date]
     );
 
     res.json(newMessage.rows[0]);

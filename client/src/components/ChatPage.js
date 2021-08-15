@@ -21,7 +21,7 @@ const ChatPage = ({setIsLoggedIn}) => {
 
   const fetchUser = async () => {
     const userResponse1 = await axios.get("/api/users");
-    debugger;
+    
     setUsers(userResponse1.data);
   };
 
@@ -31,11 +31,7 @@ const ChatPage = ({setIsLoggedIn}) => {
     setMessages(messageResponse1.data);
   };
 
-  const sendMessage = async (message) => {
-    const messageResponse = await axios.post("/api/messages", message);
-
-    setMessages(messageResponse.data);
-  }
+  
 
   // logout user from local storage
 
@@ -46,7 +42,7 @@ const ChatPage = ({setIsLoggedIn}) => {
   };
 
   useEffect(() => {
-    sendMessage();
+    
     fetchUser();
     fetchMessage();
   }, []);
@@ -55,10 +51,22 @@ const ChatPage = ({setIsLoggedIn}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setMessages([{ text: textInputRef.current.value, name: "Maher" }]);
-    // socket.emit("message", { text: textInputRef.current.value, name: "Maher" });
-    textInputRef.current.value = "";
+    const text = textInputRef.current.value;
+    const userId = localStorage.getItem("userId");
+
+    const message = {
+      userId: userId,
+      text: text,
+      date: new Date()
+    };
+
+    axios.post("/api/messages", message).then(() => {
+      textInputRef.current.value = "";
+      setMessages([...messages, message]);
+    });
+  
   };
+  
   return (
     <div className="page-content page-container" id="page-content">
       <div className="container d-flex justify-content-left">
