@@ -4,9 +4,10 @@ const Messages = ({ messages }) => {
   let chatMessages;
   if (messages) {
     chatMessages = messages.map((chat) => {
-      return <p>{chat.text}</p>;
+      return <p>{chat.text}</p>
     });
   }
+
 
   return (
     <div className="col-md-6 pl-0">

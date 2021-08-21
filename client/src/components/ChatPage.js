@@ -9,6 +9,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 
 const ChatPage = ({setIsLoggedIn}) => {
+  const [users, setUsers] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const socket = io();
 
@@ -16,8 +18,6 @@ const ChatPage = ({setIsLoggedIn}) => {
     console.log(message);
   });
  
-  const [users, setUsers] = useState([]);
-  const [messages, setMessages] = useState([]);
 
   const fetchUser = async () => {
     const userResponse1 = await axios.get("/api/users");
@@ -42,7 +42,6 @@ const ChatPage = ({setIsLoggedIn}) => {
   };
 
   useEffect(() => {
-    
     fetchUser();
     fetchMessage();
   }, []);
@@ -52,18 +51,22 @@ const ChatPage = ({setIsLoggedIn}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const text = textInputRef.current.value;
-    const userId = localStorage.getItem("userId");
-
+    const userId = JSON.parse(localStorage.getItem("userId"));
+    
+  
     const message = {
-      userId: userId,
+      userId: userId[0].firstname,
       text: text,
-      date: new Date()
+     
     };
 
-    axios.post("/api/messages", message).then(() => {
-      textInputRef.current.value = "";
+
+    // axios.post("/api/messages", message).then(() => {
+    //   textInputRef.current.value = "";});
       setMessages([...messages, message]);
-    });
+
+      // Emit message to server
+     socket.emit("chatMessage", text);
   
   };
   

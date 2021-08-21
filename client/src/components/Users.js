@@ -9,6 +9,8 @@ const Users = ({ users }) => {
     });
   }
 
+  const user = JSON.parse(localStorage.getItem("userId"));
+
   return (
     <div className="col-md-3 pr-0">
       <div className="card card-bordered">
@@ -27,8 +29,7 @@ const Users = ({ users }) => {
         >
           <div className="media media-chat">
             <div>
-              <p>Adam</p>
-              <p>Mike</p>
+              <p>{user[0].firstname}</p>
               <p>{chatUsers}</p>
               <p className="meta"></p>
             </div>

@@ -18,7 +18,13 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     io.emit("message", "User has left the chat");
     console.log("User has left");
-  })
+  });
+
+  // Listen for chat message from client  
+    socket.on("chatMessage", (text) => {
+      console.log("Message: " + text);
+    io.emit("message", text);
+  });
 });
 
 
@@ -66,11 +72,11 @@ app.get("/api/messages", async (req, res) => {
 app.post("/api/messages", async (req, res) => {
   try {
     // const userId = req.params;
-    const {userId, text, date} = req.body;
+    const {text} = req.body;
 
     const newMessage = await pool.query(
-      "INSERT INTO messages(message_id, text, created_date) VALUES($1, $2, $3) RETURNING *",
-      [userId, text, date]
+      "INSERT INTO messages(text) VALUES($1) RETURNING *",
+      [text]
     );
 
     res.json(newMessage.rows[0]);
