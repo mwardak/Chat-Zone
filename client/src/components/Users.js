@@ -1,15 +1,11 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 const Users = ({ users }) => {
-  let chatUsers;
-  if (users) {
-    
-    chatUsers = users.map((user) => {
-      return <p>{user.name}</p>;
-    });
-  }
-
-  const user = JSON.parse(localStorage.getItem("userId"));
+console.log(users);
+  
+     const userName = users.map(user => {
+        return ( <p>{user.firstname}</p>) 
+     });   
 
   return (
     <div className="col-md-3 pr-0">
@@ -29,8 +25,7 @@ const Users = ({ users }) => {
         >
           <div className="media media-chat">
             <div>
-              <p>{user[0].firstname}</p>
-              <p>{chatUsers}</p>
+              {userName}
               <p className="meta"></p>
             </div>
           </div>

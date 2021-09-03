@@ -10,21 +10,21 @@ const io = socket(server);
 
 //Run when user connects
 io.on("connection", (socket) => {
-  socket.emit("message", "Welcome to ChatZone");
+  socket.on("chatMessage", (message) => {
+    console.log(message);
+  socket.broadcast.emit("receive-message", message)
+  // socket.emit("message", "Welcome to ChatZone");
 
-  socket.broadcast.emit("message", "New user has joined the chat");
+  });
   
   //Runs when user disconnects
   socket.on("disconnect", () => {
-    io.emit("message", "User has left the chat");
+    
     console.log("User has left");
   });
 
-  // Listen for chat message from client  
-    socket.on("chatMessage", (text) => {
-      console.log("Message: " + text);
-    io.emit("message", text);
-  });
+ 
+   
 });
 
 
@@ -61,7 +61,7 @@ app.post("/api/loginform", async (req, res) => {
 
 // Get all  chat messages
 app.get("/api/messages", async (req, res) => {
-  // const allMessages = await pool.query("SELECT messages FROM users");
+  // const allMessages = await pool.query("SELECT text FROM  messages");
 
   // res.json(allMessages.rows);
 
@@ -73,6 +73,7 @@ app.post("/api/messages", async (req, res) => {
   try {
     // const userId = req.params;
     const {text} = req.body;
+    console.log(text);
 
     const newMessage = await pool.query(
       "INSERT INTO messages(text) VALUES($1) RETURNING *",
@@ -80,6 +81,7 @@ app.post("/api/messages", async (req, res) => {
     );
 
     res.json(newMessage.rows[0]);
+    console.log(newMessage.rows[0]);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -87,10 +89,10 @@ app.post("/api/messages", async (req, res) => {
 
 // Get all users
 app.get("/api/users", async (req, res) => {
-  // const allUsers = await pool.query("SELECT name FROM users");
+  const allUsers = await pool.query("SELECT * FROM users");
 
-  // res.json(allUsers.rows);
-  res.json([]);
+  res.json(allUsers.rows);
+  // res.json([]);
 });
 
 // Register user

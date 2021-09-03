@@ -9,3 +9,10 @@ CREATE TABLE users(
     
     );
 
+CREATE TABLE messages(
+    PRIMARY KEY messages_id SERIAL ,
+	FOREIGN KEY (id)
+	REFERENCES users(id),
+    text VARCHAR(225) NOT NULL,
+	created_date timestamp NOT NULL
+    );
