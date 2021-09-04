@@ -51,16 +51,19 @@ const ChatPage = ({ setIsLoggedIn }) => {
     e.preventDefault();
     const text = textInputRef.current.value;
     const user = JSON.parse(localStorage.getItem("userId"));
-
+   
+    
     const message = {
-      user: user.firstname,
+      id: user.id,
       text: text,
+      date: new Date(),
     };
+    console.log(message);
 
     axios.post("/api/messages", message).then(() => {
-    
-    });
     // setMessages([...messages, message]);
+    });
+    
 
     // Emit message to server
     socket.emit("chatMessage", message);

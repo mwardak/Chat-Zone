@@ -12,34 +12,21 @@ const io = socket(server);
 io.on("connection", (socket) => {
   socket.on("chatMessage", (message) => {
     console.log(message);
-  socket.broadcast.emit("receive-message", message)
-  // socket.emit("message", "Welcome to ChatZone");
-
+    socket.broadcast.emit("receive-message", message);
+    // socket.emit("message", "Welcome to ChatZone");
   });
-  
+
   //Runs when user disconnects
   socket.on("disconnect", () => {
-    
     console.log("User has left");
   });
-
- 
-   
 });
-
-
-
-
 
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
 
-
-
 // LoginForm
 app.post("/api/loginform", async (req, res) => {
-  // check if the email/password matches a user in the DB
-  //if not send not authorized status 403
   const { email, password } = req.body;
 
   try {
@@ -47,14 +34,11 @@ app.post("/api/loginform", async (req, res) => {
       "SELECT * FROM users WHERE email = $1 AND password = $2",
       [email, password]
     );
-    console.log(newUser.rows);
 
     res.json(newUser.rows);
   } catch (err) {
     res.status(403).send(err.message);
   }
-
-  
 
   //ELSE sucucessful status
 });
@@ -72,16 +56,15 @@ app.get("/api/messages", async (req, res) => {
 app.post("/api/messages", async (req, res) => {
   try {
     // const userId = req.params;
-    const {text} = req.body;
-    console.log(text);
+    const { id, text, date } = req.body;
+    console.log(id, text, date);
 
     const newMessage = await pool.query(
-      "INSERT INTO messages(text) VALUES($1) RETURNING *",
-      [text]
+      "INSERT INTO messages(messages_id, messages_text, created_date) VALUES($1, $2, $3) RETURNING *",
+      [id, text, date]
     );
 
     res.json(newMessage.rows[0]);
-    console.log(newMessage.rows[0]);
   } catch (err) {
     res.status(500).send(err.message);
   }

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 
 const Users = ({ users }) => {
-console.log(users);
+
   
      const userName = users.map(user => {
         return ( <p>{user.firstname}</p>) 
