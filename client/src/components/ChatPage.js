@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useRef, useHistory, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Users from "./Users";
 import Messages from "./Messages";
 import InputMessage from "./InputMessage";
@@ -31,6 +31,7 @@ const ChatPage = ({ setIsLoggedIn }) => {
 
   const fetchMessage = async () => {
     const messageResponse1 = await axios.get("/api/messages");
+    console.log(messageResponse1.data);
 
     setMessages(messageResponse1.data);
   };
@@ -51,14 +52,14 @@ const ChatPage = ({ setIsLoggedIn }) => {
     e.preventDefault();
     const text = textInputRef.current.value;
     const user = JSON.parse(localStorage.getItem("userId"));
-   
+    
     
     const message = {
-      id: user.id,
+      id: user[0].id,
       text: text,
       date: new Date(),
     };
-    console.log(message);
+    
 
     axios.post("/api/messages", message).then(() => {
     // setMessages([...messages, message]);

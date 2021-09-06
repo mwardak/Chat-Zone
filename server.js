@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const path = require("path");
 const pool = require("./db");
 const http = require("http");
@@ -30,9 +31,14 @@ app.post("/api/loginform", async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    console.log(salt);
+    console.log(hashedPassword);
+    
     const newUser = await pool.query(
       "SELECT * FROM users WHERE email = $1 AND password = $2",
-      [email, password]
+      [email, hashedPassword]
     );
 
     res.json(newUser.rows);
@@ -40,16 +46,17 @@ app.post("/api/loginform", async (req, res) => {
     res.status(403).send(err.message);
   }
 
-  //ELSE sucucessful status
 });
 
 // Get all  chat messages
 app.get("/api/messages", async (req, res) => {
-  // const allMessages = await pool.query("SELECT text FROM  messages");
+  try {
+    const messages = await pool.query("SELECT * FROM messages");
 
-  // res.json(allMessages.rows);
-
-  res.json([]);
+    res.json(messages.rows);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 });
 
 // Create a chat message
@@ -57,11 +64,10 @@ app.post("/api/messages", async (req, res) => {
   try {
     // const userId = req.params;
     const { id, text, date } = req.body;
-    console.log(id, text, date);
 
     const newMessage = await pool.query(
-      "INSERT INTO messages(messages_id, messages_text, created_date) VALUES($1, $2, $3) RETURNING *",
-      [id, text, date]
+      "INSERT INTO messages(messages_text, created_date, user_id) VALUES($1, $2, $3) RETURNING *",
+      [text, date, id]
     );
 
     res.json(newMessage.rows[0]);
@@ -72,10 +78,13 @@ app.post("/api/messages", async (req, res) => {
 
 // Get all users
 app.get("/api/users", async (req, res) => {
-  const allUsers = await pool.query("SELECT * FROM users");
+  try {
+    const allUsers = await pool.query("SELECT * FROM users");
 
-  res.json(allUsers.rows);
-  // res.json([]);
+    res.json(allUsers.rows);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
 // Register user

@@ -22,7 +22,7 @@ const LoginForm = ({setIsLoggedIn}) => {
 
     // store a response from the http request below in variable called response
     const user = loginResponse.data;
-   
+  
 
    
     // store userID in local storage

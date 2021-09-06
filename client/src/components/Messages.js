@@ -1,11 +1,11 @@
 import React from "react";
 
 const Messages = ({ messages }) => {
-  console.log(messages);
+  
   let chatMessages;
   if (messages) {
     chatMessages = messages.map((chat) => {
-      return <p>{chat.text}</p>
+      return <p>{chat.messages_text}</p>
     });
   }
 
