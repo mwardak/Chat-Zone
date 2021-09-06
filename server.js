@@ -31,21 +31,15 @@ app.post("/api/loginform", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-    console.log(salt);
-    console.log(hashedPassword);
-    
     const newUser = await pool.query(
       "SELECT * FROM users WHERE email = $1 AND password = $2",
-      [email, hashedPassword]
+      [email, password]
     );
 
     res.json(newUser.rows);
   } catch (err) {
     res.status(403).send(err.message);
   }
-
 });
 
 // Get all  chat messages
@@ -92,9 +86,14 @@ app.post("/api/register", async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    console.log(salt);
+    console.log(hashedPassword);
+
     const newUser = await pool.query(
       "INSERT INTO users(firstName, lastName, email, password) VALUES($1, $2, $3, $4) RETURNING *",
-      [firstName, lastName, email, password]
+      [firstName, lastName, email, hashedPassword]
     );
 
     res.json(newUser.rows[0]);
