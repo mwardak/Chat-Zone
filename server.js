@@ -29,18 +29,27 @@ app.use(express.json());
 // LoginForm
 app.post("/api/loginform", async (req, res) => {
   const { email, password } = req.body;
+  // bcrypt.compare password with hash
+  const hash = await pool.query(
+    "SELECT * FROM users WHERE email = $1",
+    [email]
+  );
+  console.log(hash);
 
-  try {
-    const newUser = await pool.query(
-      "SELECT * FROM users WHERE email = $1 AND password = $2",
-      [email, password]
-    );
-
-    res.json(newUser.rows);
-  } catch (err) {
-    res.status(403).send(err.message);
+  if (hash.rowCount < 1) {
+   
+    return res.status(400).json("User does not exist");
   }
-});
+
+  const isMatch = await bcrypt.compare(password, hash.rows[0].password);
+  if (!isMatch) {
+    return res.status(400).json("Incorrect password");
+  }
+
+  return res.json(hash.rows[0]);
+}
+);
+  
 
 // Get all  chat messages
 app.get("/api/messages", async (req, res) => {
