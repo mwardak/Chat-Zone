@@ -54,11 +54,13 @@ const ChatPage = ({ setIsLoggedIn }) => {
     const user = JSON.parse(localStorage.getItem("userId"));
     
     
+    
     const message = {
       id: user[0].id,
-      text: text,
-      date: new Date(),
+      text: text 
     };
+
+    debugger;
     
 
     axios.post("/api/messages", message).then(() => {

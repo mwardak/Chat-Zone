@@ -34,7 +34,7 @@ app.post("/api/loginform", async (req, res) => {
     "SELECT * FROM users WHERE email = $1",
     [email]
   );
-  console.log(hash);
+  
 
   if (hash.rowCount < 1) {
    
@@ -66,7 +66,8 @@ app.get("/api/messages", async (req, res) => {
 app.post("/api/messages", async (req, res) => {
   try {
     // const userId = req.params;
-    const { id, text, date } = req.body;
+    const { id, text} = req.body;
+    const date = new Date();
 
     const newMessage = await pool.query(
       "INSERT INTO messages(messages_text, created_date, user_id) VALUES($1, $2, $3) RETURNING *",
