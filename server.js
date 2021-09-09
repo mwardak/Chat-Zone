@@ -13,8 +13,7 @@ const io = socket(server);
 io.on("connection", (socket) => {
   socket.on("chatMessage", (message) => {
     console.log(message);
-    socket.broadcast.emit("receive-message", message);
-    // socket.emit("message", "Welcome to ChatZone");
+   
   });
 
   //Runs when user disconnects
@@ -74,6 +73,8 @@ app.post("/api/messages", async (req, res) => {
       [text, date, id]
     );
 
+    io.emit("receive-message", newMessage.rows[0]);
+
     res.json(newMessage.rows[0]);
   } catch (err) {
     res.status(500).send(err.message);
@@ -84,6 +85,9 @@ app.post("/api/messages", async (req, res) => {
 app.get("/api/users", async (req, res) => {
   try {
     const allUsers = await pool.query("SELECT * FROM users");
+    //io emit user joined
+    io.emit("user-joined", allUsers.rows);
+    
 
     res.json(allUsers.rows);
   } catch (error) {
@@ -98,8 +102,7 @@ app.post("/api/register", async (req, res) => {
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-    console.log(salt);
-    console.log(hashedPassword);
+   
 
     const newUser = await pool.query(
       "INSERT INTO users(firstName, lastName, email, password) VALUES($1, $2, $3, $4) RETURNING *",
