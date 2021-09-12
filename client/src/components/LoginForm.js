@@ -18,7 +18,11 @@ const LoginForm = ({setIsLoggedIn}) => {
     };
 
     const loginResponse = await axios.post("/api/loginform", loginBody);
-    
+    //if status is 400 return alert
+    if (loginResponse.status === 400) {
+      alert("Login failed. Please register.");
+    }
+
 
     // store a response from the http request below in variable called response
     const user = loginResponse.data;

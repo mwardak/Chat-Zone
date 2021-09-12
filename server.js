@@ -8,19 +8,9 @@ const socket = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 const io = socket(server);
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
-//Run when user connects
-io.on("connection", (socket) => {
-  socket.on("chatMessage", (message) => {
-    console.log(message);
-   
-  });
-
-  //Runs when user disconnects
-  socket.on("disconnect", () => {
-    console.log("User has left");
-  });
-});
 
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
@@ -29,14 +19,11 @@ app.use(express.json());
 app.post("/api/loginform", async (req, res) => {
   const { email, password } = req.body;
   // bcrypt.compare password with hash
-  const hash = await pool.query(
-    "SELECT * FROM users WHERE email = $1",
-    [email]
-  );
-  
+  const hash = await pool.query("SELECT * FROM users WHERE email = $1", [
+    email,
+  ]);
 
   if (hash.rowCount < 1) {
-   
     return res.status(400).json("User does not exist");
   }
 
@@ -46,9 +33,7 @@ app.post("/api/loginform", async (req, res) => {
   }
 
   return res.json(hash.rows[0]);
-}
-);
-  
+});
 
 // Get all  chat messages
 app.get("/api/messages", async (req, res) => {
@@ -65,7 +50,7 @@ app.get("/api/messages", async (req, res) => {
 app.post("/api/messages", async (req, res) => {
   try {
     // const userId = req.params;
-    const { id, text} = req.body;
+    const { id, text } = req.body;
     const date = new Date();
 
     const newMessage = await pool.query(
@@ -87,7 +72,6 @@ app.get("/api/users", async (req, res) => {
     const allUsers = await pool.query("SELECT * FROM users");
     //io emit user joined
     io.emit("user-joined", allUsers.rows);
-    
 
     res.json(allUsers.rows);
   } catch (error) {
@@ -99,17 +83,28 @@ app.get("/api/users", async (req, res) => {
 app.post("/api/register", async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
+   
+    const user = await pool.query("SELECT * FROM users WHERE firstname = $1", [
+      firstName,
+    ]);
+
+    if (user.rows.length !== 0) {
+      return res.status(401).send("User already exists");
+    }
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-   
 
     const newUser = await pool.query(
       "INSERT INTO users(firstName, lastName, email, password) VALUES($1, $2, $3, $4) RETURNING *",
       [firstName, lastName, email, hashedPassword]
     );
 
-    res.json(newUser.rows[0]);
+    const accessToken = await jwt.sign(newUser.rows[0].id, process.env.TOKEN_SECRET_KEY, {
+      expiresIn: "1h",
+    });
+
+    res.json({accessToken});
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -134,12 +129,6 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-// // This is how you specify a route path/URL with "/" and a callback/route handler
-// app.get("/api/users/:id", (req, res) => {
-//   const userId = users.find((u) => u.id === parseInt(req.params.id));
-//   if (!userId) res.status(404).send("The user was not found");
-//   res.send(userId);
-// });
 
 // Environtment variable for hosting
 const port = process.env.PORT || 3000;
