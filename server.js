@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const bcrypt = require("bcrypt");
 const path = require("path");
@@ -8,7 +9,7 @@ const socket = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 const io = socket(server);
-require("dotenv").config();
+
 const jwt = require("jsonwebtoken");
 
 
@@ -18,6 +19,15 @@ app.use(express.json());
 // LoginForm
 app.post("/api/loginform", async (req, res) => {
   const { email, password } = req.body;
+
+  //JWT 
+  const token = jwt.sign(
+    email, process.env.TOKEN_SECRET);
+  res.json({ token });
+
+  
+
+
   // bcrypt.compare password with hash
   const hash = await pool.query("SELECT * FROM users WHERE email = $1", [
     email,
@@ -100,9 +110,7 @@ app.post("/api/register", async (req, res) => {
       [firstName, lastName, email, hashedPassword]
     );
 
-    const accessToken = await jwt.sign(newUser.rows[0].id, process.env.TOKEN_SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    
 
     res.json({accessToken});
   } catch (err) {
