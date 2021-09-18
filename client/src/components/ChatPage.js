@@ -27,9 +27,14 @@ const ChatPage = ({ setIsLoggedIn }) => {
   }, []);
 
   const fetchUser = async () => {
-    const userResponse1 = await axios.get("/api/users");
-
-    setUsers(userResponse1.data);
+    //create a header with  token from local storage to send to server
+    const config = {
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    };
+    const userResponse = await axios.get("/api/users", config);
+    setUsers(userResponse.data);
   };
 
   const fetchMessage = async () => {
@@ -42,7 +47,7 @@ const ChatPage = ({ setIsLoggedIn }) => {
 
   const logoutUser = (e) => {
     e.preventDefault();
-    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
   };
 
@@ -51,7 +56,7 @@ const ChatPage = ({ setIsLoggedIn }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const text = textInputRef.current.value;
-    const user = JSON.parse(localStorage.getItem("userId"));
+    const user = localStorage.getItem("token");
 
     const message = {
       id: user.id,

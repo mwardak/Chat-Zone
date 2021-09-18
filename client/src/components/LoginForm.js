@@ -3,6 +3,7 @@ import axios from "axios";
 // import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import jwt_decode from "jwt-decode";
 
 const LoginForm = ({setIsLoggedIn}) => {
   let emailInputRef = useRef();
@@ -25,14 +26,15 @@ const LoginForm = ({setIsLoggedIn}) => {
 
 
     // store a response from the http request below in variable called response
-    const user = loginResponse.data;
-  
-
+    const user = loginResponse.data.token;
+    
+    let decoded = jwt_decode(user);
+    console.log(decoded);
    
     // store userID in local storage
-    localStorage.setItem("userId", JSON.stringify(user));
-    const result = localStorage.getItem("userId");
-    JSON.parse(result);
+    localStorage.setItem("token", user);
+    // const result = localStorage.getItem("token");
+    
 
     //if user is logged in and exists in database, redirect to chatpage
     if (loginResponse.status === 200) {

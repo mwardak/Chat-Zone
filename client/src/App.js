@@ -13,7 +13,7 @@ import Register from "./components/Register";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    !!JSON.parse(localStorage.getItem("userId"))
+    !!localStorage.getItem("token")
   );
 
   return (

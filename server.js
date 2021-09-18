@@ -19,30 +19,24 @@ app.use(express.json());
 // LoginForm
 app.post("/api/loginform", async (req, res) => {
   const { email, password } = req.body;
-
-  //JWT 
-  const token = jwt.sign(
-    email, process.env.TOKEN_SECRET);
-  res.json({ token });
-
-  
-
+  console.log(req);
 
   // bcrypt.compare password with hash
-  const hash = await pool.query("SELECT * FROM users WHERE email = $1", [
-    email,
-  ]);
+  const userEmail = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
 
-  if (hash.rowCount < 1) {
+  if (userEmail.rowCount < 1) {
     return res.status(400).json("User does not exist");
   }
 
-  const isMatch = await bcrypt.compare(password, hash.rows[0].password);
+  const isMatch = await bcrypt.compare(password, userEmail.rows[0].password);
   if (!isMatch) {
     return res.status(400).json("Incorrect password");
   }
+  //JWT 
+  const token = jwt.sign(userEmail.rows[0].id, process.env.TOKEN_SECRET);
+  res.json({ token });
 
-  return res.json(hash.rows[0]);
+ 
 });
 
 // Get all  chat messages
@@ -78,15 +72,33 @@ app.post("/api/messages", async (req, res) => {
 
 // Get all users
 app.get("/api/users", async (req, res) => {
+  //get token from api/users header and use to authorize user
+  const token = req.headers.token;
+  
   try {
-    const allUsers = await pool.query("SELECT * FROM users");
-    //io emit user joined
-    io.emit("user-joined", allUsers.rows);
+    const user = await pool.query("SELECT * FROM users");
+    
+    if (!token) { 
 
-    res.json(allUsers.rows);
-  } catch (error) {
-    res.status(500).send(error.message);
+      return res.status(401).json("Unauthorized");
+    }
+    res.json(user.rows);
+
+  } catch (err) {
+    res.status(500).send(err.message);
   }
+
+
+
+  // try {
+  //   const allUsers = await pool.query("SELECT * FROM users");
+  //   //io emit user joined
+  //   io.emit("user-joined", allUsers.rows);
+
+  //   res.json(allUsers.rows);
+  // } catch (error) {
+  //   res.status(500).send(error.message);
+  // }
 });
 
 // Register user
