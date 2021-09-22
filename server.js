@@ -12,31 +12,33 @@ const io = socket(server);
 
 const jwt = require("jsonwebtoken");
 
-
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
 
 // LoginForm
 app.post("/api/loginform", async (req, res) => {
   const { email, password } = req.body;
-  console.log(req);
 
-  // bcrypt.compare password with hash
-  const userEmail = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+  try {
+    const userEmail = await pool.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
 
-  if (userEmail.rowCount < 1) {
-    return res.status(400).json("User does not exist");
+    if (userEmail.rowCount < 1) {
+      res.status(400).json("User does not exist");
+      //change status code to 401?
+    }
+
+    const isMatch = await bcrypt.compare(password, userEmail.rows[0].password);
+    if (!isMatch) {
+      res.status(400).json("Incorrect password");
+    }
+
+    const token = jwt.sign(userEmail.rows[0].id, process.env.TOKEN_SECRET);
+    res.json({ token });
+  } catch (err) {
+    res.status(500).json({ err });
   }
-
-  const isMatch = await bcrypt.compare(password, userEmail.rows[0].password);
-  if (!isMatch) {
-    return res.status(400).json("Incorrect password");
-  }
-  //JWT 
-  const token = jwt.sign(userEmail.rows[0].id, process.env.TOKEN_SECRET);
-  res.json({ token });
-
- 
 });
 
 // Get all  chat messages
@@ -74,21 +76,21 @@ app.post("/api/messages", async (req, res) => {
 app.get("/api/users", async (req, res) => {
   //get token from api/users header and use to authorize user
   const token = req.headers.token;
-  
+
   try {
     const user = await pool.query("SELECT * FROM users");
-    
-    if (!token) { 
 
+    //verify token and return user id if valid token 
+    const userId = jwt.verify(token, process.env.TOKEN_SECRET);
+
+    if (!userId) {
       return res.status(401).json("Unauthorized");
     }
-    res.json(user.rows);
 
+    res.json(user.rows);
   } catch (err) {
     res.status(500).send(err.message);
   }
-
-
 
   // try {
   //   const allUsers = await pool.query("SELECT * FROM users");
@@ -105,7 +107,7 @@ app.get("/api/users", async (req, res) => {
 app.post("/api/register", async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
-   
+
     const user = await pool.query("SELECT * FROM users WHERE firstname = $1", [
       firstName,
     ]);
@@ -122,9 +124,7 @@ app.post("/api/register", async (req, res) => {
       [firstName, lastName, email, hashedPassword]
     );
 
-    
-
-    res.json({accessToken});
+    res.json({ newUser });
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -148,7 +148,6 @@ app.get("/api/users/:id", async (req, res) => {
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
-
 
 // Environtment variable for hosting
 const port = process.env.PORT || 3000;
