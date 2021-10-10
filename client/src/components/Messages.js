@@ -1,14 +1,19 @@
 import React from "react";
 
-const Messages = ({ messages }) => {
-  
+const Messages = ({messages, users }) => {
+   const name = users[0]?.firstname;
   let chatMessages;
   if (messages) {
     chatMessages = messages.map((chat) => {
-      return <p>{chat.messages_text}</p>
+      
+      return (
+        <>
+          <p style={{ fontWeight: "bold" }}>{name}</p>
+          <p style={{ backgroundColor: "lightblue" }}>{chat.messages_text}</p>
+        </>
+      );
     });
   }
-
 
   return (
     <div className="col-md-6 pl-0">
@@ -27,16 +32,9 @@ const Messages = ({ messages }) => {
             height: "400px !important",
           }}
         >
-          <div className="media media-chat">
-            <p>Hello how are you?</p>
-            <p class="meta"></p>
-          </div>
-          <div className="media media-chat media-chat-reverse">
-            <div className="media-body">
-              <p>I'm doing well.</p>
-
+          <div>
+            <div>
               <p>{chatMessages}</p>
-              <p className="meta"></p>
             </div>
           </div>
         </div>

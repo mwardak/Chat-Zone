@@ -5,6 +5,7 @@ import Messages from "./Messages";
 import InputMessage from "./InputMessage";
 import { io } from "socket.io-client";
 import "bootstrap/dist/css/bootstrap.min.css";
+import jwt_decode from "jwt-decode";
 
 const ChatPage = ({ setIsLoggedIn }) => {
   const [users, setUsers] = useState([]);
@@ -18,10 +19,14 @@ const ChatPage = ({ setIsLoggedIn }) => {
     });
     socket.on("receive-message", (message) => {
       setMessages((messages) => [...messages, message]);
+
     });
     socket.on("receive-users", (users) => {
-      setUsers(users);
+      setUsers((user) => [...users, user]);
     });
+
+    //private messaging feature - send message to specific user only
+    
     fetchUser();
     fetchMessage();
   }, []);
@@ -35,10 +40,16 @@ const ChatPage = ({ setIsLoggedIn }) => {
     };
     const userResponse = await axios.get("/api/users", config);
     setUsers(userResponse.data);
+    console.log(userResponse);
   };
 
   const fetchMessage = async () => {
-    const messageResponse1 = await axios.get("/api/messages");
+    const config = {
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    };
+    const messageResponse1 = await axios.get("/api/messages", config);
 
     setMessages(messageResponse1.data);
   };
@@ -56,20 +67,24 @@ const ChatPage = ({ setIsLoggedIn }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const text = textInputRef.current.value;
-    const user = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
+    var decoded = jwt_decode(token);
 
+  
     const message = {
-      id: user.id,
-      text: text,
+      text,
+      id: decoded.userId,
     };
 
     axios.post("/api/messages", message).then(() => {
       // setMessages([...messages, message]);
     });
 
-    // Emit message to server
     socket.emit("chatMessage", message);
     textInputRef.current.value = "";
+
+    console.log(message);
+
   };
 
   return (
@@ -83,7 +98,11 @@ const ChatPage = ({ setIsLoggedIn }) => {
       <div className="padding">
         <div className="container d-flex justify-content-center">
           <Users users={users} />
-          <Messages messages={messages} />
+          <Messages
+            setIsLoggedIn={setIsLoggedIn}
+            messages={messages}
+            users={users}
+          />
         </div>
 
         <div className="container d-flex justify-content-center">

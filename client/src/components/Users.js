@@ -1,11 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 
 const Users = ({ users }) => {
-
-  
-     const userName = users.map(user => {
-        return ( <p>{user.firstname}</p>) 
-     });   
+  const userName = users.map((user) => {
+    return <p>{user.firstname}</p>;
+  });
 
   return (
     <div className="col-md-3 pr-0">
@@ -23,19 +21,12 @@ const Users = ({ users }) => {
             height: "400px !important",
           }}
         >
-          <div className="media media-chat">
-            <div>
-              {userName}
-              <p className="meta"></p>
-            </div>
+          <div>
+            <div className="users">{userName}</div>
           </div>
         </div>
-
-        
-          
-        </div>
       </div>
-   
+    </div>
   );
 };
 

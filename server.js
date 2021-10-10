@@ -11,9 +11,13 @@ const server = http.createServer(app);
 const io = socket(server);
 
 const jwt = require("jsonwebtoken");
+const jwt_decode = require("jwt-decode");
+const { send } = require("process");
 
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
+
+
 
 // LoginForm
 app.post("/api/loginform", async (req, res) => {
@@ -34,17 +38,26 @@ app.post("/api/loginform", async (req, res) => {
       res.status(400).json("Incorrect password");
     }
 
-    const token = jwt.sign(userEmail.rows[0].id, process.env.TOKEN_SECRET);
+    const token = jwt.sign(
+      { userId: userEmail.rows[0].id },
+      process.env.TOKEN_SECRET
+    );
     res.json({ token });
   } catch (err) {
-    res.status(500).json({ err });
+    res.status(500).send({ err });
   }
 });
 
 // Get all  chat messages
 app.get("/api/messages", async (req, res) => {
   try {
+    const token = req.headers.token;
     const messages = await pool.query("SELECT * FROM messages");
+
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    if (!decoded) {
+      return res.status(401).json("Unauthorized");
+    }
 
     res.json(messages.rows);
   } catch (err) {
@@ -54,17 +67,17 @@ app.get("/api/messages", async (req, res) => {
 
 // Create a chat message
 app.post("/api/messages", async (req, res) => {
-  try {
-    // const userId = req.params;
-    const { id, text } = req.body;
-    const date = new Date();
+  const { id, text} = req.body;
+  const date = new Date();
+  // console.log(req.body);
 
+  try {
     const newMessage = await pool.query(
       "INSERT INTO messages(messages_text, created_date, user_id) VALUES($1, $2, $3) RETURNING *",
       [text, date, id]
     );
 
-    io.emit("receive-message", newMessage.rows[0]);
+    socket.broadcast.to(id).emit("receive-message", {sender:id, chatMessage:text });
 
     res.json(newMessage.rows[0]);
   } catch (err) {
@@ -75,32 +88,27 @@ app.post("/api/messages", async (req, res) => {
 // Get all users
 app.get("/api/users", async (req, res) => {
   //get token from api/users header and use to authorize user
-  const token = req.headers.token;
 
   try {
-    const user = await pool.query("SELECT * FROM users");
+    const token = req.headers.token;
 
-    //verify token and return user id if valid token 
-    const userId = jwt.verify(token, process.env.TOKEN_SECRET);
+    const decoded = jwt_decode(token);
 
-    if (!userId) {
+    const user = await pool.query("SELECT firstname FROM users WHERE id = $1", [
+      decoded.userId,
+    ]);
+
+    //verify token and return user id if valid token
+    const payLoad = jwt.verify(token, process.env.TOKEN_SECRET);
+
+    if (!payLoad) {
       return res.status(401).json("Unauthorized");
     }
-
+    // console.log(user);
     res.json(user.rows);
   } catch (err) {
     res.status(500).send(err.message);
   }
-
-  // try {
-  //   const allUsers = await pool.query("SELECT * FROM users");
-  //   //io emit user joined
-  //   io.emit("user-joined", allUsers.rows);
-
-  //   res.json(allUsers.rows);
-  // } catch (error) {
-  //   res.status(500).send(error.message);
-  // }
 });
 
 // Register user
@@ -127,20 +135,6 @@ app.post("/api/register", async (req, res) => {
     res.json({ newUser });
   } catch (err) {
     res.status(500).send(err.message);
-  }
-});
-
-// Get a single user = GET:"api/users/{id}"
-app.get("/api/users/:id", async (req, res) => {
-  const id = req.params;
-
-  try {
-    const singleUser = await pool.query("SELECT * FROM users WHERE  id = $1", [
-      id,
-    ]);
-    res.json(singleUser.rows);
-  } catch (err) {
-    console.log(err);
   }
 });
 
