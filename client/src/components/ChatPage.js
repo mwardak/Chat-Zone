@@ -15,7 +15,6 @@ const ChatPage = ({ setIsLoggedIn }) => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("connect", socket.id);
     });
     socket.on("receive-message", (message) => {
       setMessages((messages) => [...messages, message]);
@@ -40,7 +39,6 @@ const ChatPage = ({ setIsLoggedIn }) => {
     };
     const userResponse = await axios.get("/api/users", config);
     setUsers(userResponse.data);
-    console.log(userResponse);
   };
 
   const fetchMessage = async () => {
@@ -50,6 +48,7 @@ const ChatPage = ({ setIsLoggedIn }) => {
       },
     };
     const messageResponse1 = await axios.get("/api/messages", config);
+    console.log(messageResponse1.data);
 
     setMessages(messageResponse1.data);
   };

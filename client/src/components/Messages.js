@@ -1,14 +1,14 @@
 import React from "react";
 
-const Messages = ({messages, users }) => {
-   const name = users[0]?.firstname;
+const Messages = ({messages }) => {
+  
   let chatMessages;
   if (messages) {
     chatMessages = messages.map((chat) => {
       
       return (
         <>
-          <p style={{ fontWeight: "bold" }}>{name}</p>
+          <p style={{ fontWeight: "bold" }}>{chat.firstname}</p>
           <p style={{ backgroundColor: "lightblue" }}>{chat.messages_text}</p>
         </>
       );

@@ -52,7 +52,9 @@ app.post("/api/loginform", async (req, res) => {
 app.get("/api/messages", async (req, res) => {
   try {
     const token = req.headers.token;
-    const messages = await pool.query("SELECT * FROM messages");
+    const messages = await pool.query(
+      "SELECT messages_text, firstname FROM messages INNER JOIN users ON messages.user_id = users.id"
+      );
 
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
     if (!decoded) {
@@ -76,6 +78,7 @@ app.post("/api/messages", async (req, res) => {
       "INSERT INTO messages(messages_text, created_date, user_id) VALUES($1, $2, $3) RETURNING *",
       [text, date, id]
     );
+
 
     socket.broadcast.to(id).emit("receive-message", {sender:id, chatMessage:text });
 
