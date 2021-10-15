@@ -30,7 +30,7 @@ app.post("/api/loginform", async (req, res) => {
 
     if (userEmail.rowCount < 1) {
       res.status(400).json("User does not exist");
-      //change status code to 401?
+      
     }
 
     const isMatch = await bcrypt.compare(password, userEmail.rows[0].password);
