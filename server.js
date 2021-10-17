@@ -17,31 +17,31 @@ const { send } = require("process");
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
 
-
-
 // LoginForm
 app.post("/api/loginform", async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    //select firstname and email database
+
     const userEmail = await pool.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
 
     if (userEmail.rowCount < 1) {
       res.status(400).json("User does not exist");
-      
     }
 
     const isMatch = await bcrypt.compare(password, userEmail.rows[0].password);
     if (!isMatch) {
       res.status(400).json("Incorrect password");
     }
-
+    // add firstname to object below
     const token = jwt.sign(
-      { userId: userEmail.rows[0].id },
+      { userId: userEmail.rows[0].id, firstName: userEmail.rows[0].firstname },
       process.env.TOKEN_SECRET
     );
+
     res.json({ token });
   } catch (err) {
     res.status(500).send({ err });
@@ -54,7 +54,7 @@ app.get("/api/messages", async (req, res) => {
     const token = req.headers.token;
     const messages = await pool.query(
       "SELECT messages_text, firstname FROM messages INNER JOIN users ON messages.user_id = users.id"
-      );
+    );
 
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
     if (!decoded) {
@@ -69,9 +69,8 @@ app.get("/api/messages", async (req, res) => {
 
 // Create a chat message
 app.post("/api/messages", async (req, res) => {
-  const { id, text} = req.body;
+  const { id, text, userName } = req.body;
   const date = new Date();
-  // console.log(req.body);
 
   try {
     const newMessage = await pool.query(
@@ -79,8 +78,8 @@ app.post("/api/messages", async (req, res) => {
       [text, date, id]
     );
 
-
-    socket.broadcast.to(id).emit("receive-message", {sender:id, chatMessage:text });
+    // add firstname to object below coming from req.body
+    io.emit("receive-message", {firstname: userName, messages_text: text  });
 
     res.json(newMessage.rows[0]);
   } catch (err) {
@@ -107,6 +106,8 @@ app.get("/api/users", async (req, res) => {
     if (!payLoad) {
       return res.status(401).json("Unauthorized");
     }
+
+    io.emit("receive-users", { firstname: user.rows[0].firstname });
     // console.log(user);
     res.json(user.rows);
   } catch (err) {

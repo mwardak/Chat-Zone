@@ -29,7 +29,7 @@ const LoginForm = ({setIsLoggedIn}) => {
     const user = loginResponse.data.token;
     
     let decoded = jwt_decode(user);
-    console.log(decoded);
+    // console.log(decoded);
    
     // store userID in local storage
     localStorage.setItem("token", user);

@@ -14,18 +14,21 @@ const ChatPage = ({ setIsLoggedIn }) => {
   const socket = io();
 
   useEffect(() => {
-    socket.on("connect", () => {
-    });
+   console.log(users)
+  }, [users]);
+
+  useEffect(() => {
+    socket.on("connect", () => {});
+
     socket.on("receive-message", (message) => {
       setMessages((messages) => [...messages, message]);
-
     });
-    socket.on("receive-users", (users) => {
-      setUsers((user) => [...users, user]);
-    });
-
-    //private messaging feature - send message to specific user only
     
+
+    socket.on("receive-users" , (user) => {
+      setUsers(users => [...users, user]);
+    });
+
     fetchUser();
     fetchMessage();
   }, []);
@@ -47,8 +50,8 @@ const ChatPage = ({ setIsLoggedIn }) => {
         token: localStorage.getItem("token"),
       },
     };
+
     const messageResponse1 = await axios.get("/api/messages", config);
-    console.log(messageResponse1.data);
 
     setMessages(messageResponse1.data);
   };
@@ -69,21 +72,21 @@ const ChatPage = ({ setIsLoggedIn }) => {
     const token = localStorage.getItem("token");
     var decoded = jwt_decode(token);
 
-  
+    //get the correct firstname from token and add to message below
+
     const message = {
       text,
       id: decoded.userId,
+      userName: decoded.firstName,
     };
 
+    console.log(message);
     axios.post("/api/messages", message).then(() => {
       // setMessages([...messages, message]);
     });
 
     socket.emit("chatMessage", message);
     textInputRef.current.value = "";
-
-    console.log(message);
-
   };
 
   return (
