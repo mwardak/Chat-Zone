@@ -13,9 +13,9 @@ const ChatPage = ({ setIsLoggedIn }) => {
 
   const socket = io();
 
-  useEffect(() => {
-   console.log(users)
-  }, [users]);
+  // useEffect(() => {
+  //  console.log(users)
+  // }, [users]);
 
   useEffect(() => {
     socket.on("connect", () => {});
@@ -23,10 +23,13 @@ const ChatPage = ({ setIsLoggedIn }) => {
     socket.on("receive-message", (message) => {
       setMessages((messages) => [...messages, message]);
     });
-    
 
-    socket.on("receive-users" , (user) => {
-      setUsers(users => [...users, user]);
+    socket.on("login", ({ activeUsers }) => {
+      setUsers(activeUsers);
+    });
+
+    socket.on("logout", ({ activeUsers }) => {
+      setUsers(activeUsers);
     });
 
     fetchUser();
@@ -40,8 +43,8 @@ const ChatPage = ({ setIsLoggedIn }) => {
         token: localStorage.getItem("token"),
       },
     };
-    const userResponse = await axios.get("/api/users", config);
-    setUsers(userResponse.data);
+    const userResponse = await axios.get("/api/users/active", config);
+    setUsers(userResponse.data.rows);
   };
 
   const fetchMessage = async () => {
@@ -58,10 +61,23 @@ const ChatPage = ({ setIsLoggedIn }) => {
 
   // logout user from local storage
 
-  const logoutUser = (e) => {
+  const logoutUser = async (e) => {
     e.preventDefault();
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
+    try {
+      //get logged in user's email from local staorage
+      const userEmail = localStorage.getItem("email");
+
+      //send email to the server to logout user
+      const response = await axios.post("/api/logout", { userEmail });
+
+      //if the response is successfull, remove the token from local storage and set isLoggedIn to false
+      if (response.status === 200) {
+        localStorage.removeItem("token");
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   let textInputRef = useRef();

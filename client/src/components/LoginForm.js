@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import jwt_decode from "jwt-decode";
 
-const LoginForm = ({setIsLoggedIn}) => {
+const LoginForm = ({ setIsLoggedIn }) => {
   let emailInputRef = useRef();
   let passwordInputRef = useRef();
   // let history = useHistory();
@@ -24,17 +24,14 @@ const LoginForm = ({setIsLoggedIn}) => {
       alert("Login failed. Please register.");
     }
 
-
     // store a response from the http request below in variable called response
     const user = loginResponse.data.token;
-    
-    let decoded = jwt_decode(user);
-    // console.log(decoded);
-   
-    // store userID in local storage
+
+    // store userID in locat  storage
     localStorage.setItem("token", user);
-    // const result = localStorage.getItem("token");
-    
+
+    //store email in local storage
+    localStorage.setItem("email", loginResponse.data.email);
 
     //if user is logged in and exists in database, redirect to chatpage
     if (loginResponse.status === 200) {
