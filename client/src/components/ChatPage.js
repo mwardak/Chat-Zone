@@ -117,7 +117,10 @@ const ChatPage = ({ setIsLoggedIn }) => {
 
       <div className="page-content page-container" id="page-content">
         <div className="padding">
-          <div className="container d-flex justify-content-center">
+          <div
+            style={{ width: 712 }}
+            className="container d-flex justify-content-center"
+          >
             <Users users={users} />
             <Messages
               setIsLoggedIn={setIsLoggedIn}

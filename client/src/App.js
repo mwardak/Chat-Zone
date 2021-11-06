@@ -12,12 +12,10 @@ import "./Style.css";
 import Register from "./components/Register";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    !!localStorage.getItem("token")
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
   return (
-    <Router >
+    <Router>
       <Switch>
         <Route
           path="/chat"
