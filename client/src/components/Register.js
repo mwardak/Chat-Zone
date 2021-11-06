@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import chatzone from "./chatzone.png";
 
 const Register = () => {
   let firstNameRef = useRef();
@@ -37,16 +38,23 @@ const Register = () => {
   
 
   return (
-    <form className="container" onSubmit={handleSubmit}>
+    <form className="container" style={{
+      width: 400,
+      marginTop: 35,
+      border: "1px solid ",
+      backgroundColor: "#cad5df",
+      borderRadius: "5mm",
+    }} onSubmit={handleSubmit}>
+      <img src={chatzone} style={{width:368, height:180, alignContent:"initial", borderRadius:"5mm"}} />
       <div className="form-group">
-        <label>First Name</label>
+        <label style={{marginTop:10}}>First Name</label>
         <input
           required
           type="firsName"
           className="form-control"
-          id="firsName"
+          id="firstName"
           aria-describedby="firstName"
-          placeholder="Firs Name..."
+          placeholder="First Name..."
           ref={firstNameRef}
         ></input>
       </div>
@@ -89,8 +97,9 @@ const Register = () => {
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
+      
 
-      <p>
+      <p style={{marginTop:22}}>
         Already have an account? <Link to="/">LOGIN</Link>
       </p>
     </form>

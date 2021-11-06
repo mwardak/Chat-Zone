@@ -9,7 +9,7 @@ const Messages = ({messages }) => {
       return (
         <>
           <p style={{ fontWeight: "bold" }}>{chat.firstname}</p>
-          <p style={{ backgroundColor: "lightblue" }}>{chat.messages_text}</p>
+          <p style={{ backgroundColor: "ghostwhite"}}>{chat.messages_text}</p>
         </>
       );
     });

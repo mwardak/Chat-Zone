@@ -1,6 +1,6 @@
-.card-bordered {
+/* .card-bordered {
   border: 1px solid #ebebeb;
-}
+} */
 
 .card {
   border: 0;
@@ -11,7 +11,7 @@
 }
 
 body {
-  background-color: #f9f9fa;
+  background-color: #4e8a9f;
 }
 
 .card-header {

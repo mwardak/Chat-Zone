@@ -3,7 +3,12 @@ import axios from "axios";
 // import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import jwt_decode from "jwt-decode";
+//import photos
+import chatzone from "./chatzone.png";
+
+
+
+// import jwt_decode from "jwt-decode";
 
 const LoginForm = ({ setIsLoggedIn }) => {
   let emailInputRef = useRef();
@@ -27,7 +32,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
     // store a response from the http request below in variable called response
     const user = loginResponse.data.token;
 
-    // store userID in locat  storage
+    // store userID in local  storage
     localStorage.setItem("token", user);
 
     //store email in local storage
@@ -41,8 +46,19 @@ const LoginForm = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <form className="container" onSubmit={handleSubmit}>
-      <div className="form-group">
+    <form
+      className="container"
+      style={{
+        width: 400,
+        marginTop: 100,
+        border: "1px solid ",
+        backgroundColor: "#cad5df",
+        borderRadius: "5mm",
+      }}
+      onSubmit={handleSubmit}
+    >
+      <img src={chatzone} style={{width:368, height:180, alignContent:"initial", borderRadius:"5mm"}} />
+      <div className="login-group" style={{marginTop:20}}>
         <label>Email Address</label>
         <input
           required
@@ -70,7 +86,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
         Submit
       </button>
       {""}
-      <p>
+      <p style={{ marginTop: 22 }}>
         Don't have an account? <Link to="/register">REGISTER</Link>
       </p>
     </form>

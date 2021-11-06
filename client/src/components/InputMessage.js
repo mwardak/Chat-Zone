@@ -2,10 +2,11 @@ import React from "react";
 
 const InputMessage = ({ textInputRef, handleSubmit }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="publisher bt-1 border-light">
+    <form onSubmit={handleSubmit} >
+      <div className="publisher bt-1 border-light"  >
         {" "}
         <input
+          style={{width: 423, borderRadius: 5, marginTop: 2, borderBlockColor: "darkgray"}}
           ref={textInputRef}
           type="text"
           required
@@ -13,7 +14,7 @@ const InputMessage = ({ textInputRef, handleSubmit }) => {
           placeholder="Write a message..."
         ></input>{" "}
         <a className="publisher-btn text-info" href="#" data-abc="true">
-          <button>SEND</button>
+          <button style={{borderRadius: 5}} >SEND</button>
         </a>
       </div>
     </form>

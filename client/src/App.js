@@ -17,7 +17,7 @@ const App = () => {
   );
 
   return (
-    <Router>
+    <Router >
       <Switch>
         <Route
           path="/chat"
@@ -46,4 +46,5 @@ const App = () => {
     </Router>
   );
 };
+
 export default App;

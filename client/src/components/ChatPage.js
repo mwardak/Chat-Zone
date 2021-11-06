@@ -106,28 +106,32 @@ const ChatPage = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <div className="page-content page-container" id="page-content">
-      <div className="container d-flex justify-content-left">
-        <button className="btn btn-success" onClick={logoutUser}>
-          logout
-        </button>
-      </div>
+    <div>
+      <button
+        style={{ marginLeft: "80em" }}
+        className="btn btn-secondary"
+        onClick={logoutUser}
+      >
+        logout
+      </button>
 
-      <div className="padding">
-        <div className="container d-flex justify-content-center">
-          <Users users={users} />
-          <Messages
-            setIsLoggedIn={setIsLoggedIn}
-            messages={messages}
-            users={users}
-          />
-        </div>
+      <div className="page-content page-container" id="page-content">
+        <div className="padding">
+          <div className="container d-flex justify-content-center">
+            <Users users={users} />
+            <Messages
+              setIsLoggedIn={setIsLoggedIn}
+              messages={messages}
+              users={users}
+            />
+          </div>
 
-        <div className="container d-flex justify-content-center">
-          <InputMessage
-            textInputRef={textInputRef}
-            handleSubmit={handleSubmit}
-          />
+          <div className="container d-flex justify-content-center">
+            <InputMessage
+              textInputRef={textInputRef}
+              handleSubmit={handleSubmit}
+            />
+          </div>
         </div>
       </div>
     </div>

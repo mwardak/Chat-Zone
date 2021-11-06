@@ -160,6 +160,8 @@ app.get("/api/users/active", async (req, res) => {
       "SELECT * FROM users WHERE last_active_at > now() - interval ' 45 minutes'"
     );
 
+    console.log(active);
+
     if (active) {
       res.send(active);
     }
