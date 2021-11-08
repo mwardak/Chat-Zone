@@ -11,6 +11,7 @@ const server = http.createServer(app);
 const io = socket(server);
 
 const jwt = require("jsonwebtoken");
+const jwt_decode = require("jwt-decode");
 
 app.use("/", express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
