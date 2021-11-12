@@ -74,7 +74,7 @@ app.post("/api/loginform", async (req, res) => {
 
     //Query the db for the active users
     const active = await pool.query(
-      "SELECT * FROM users WHERE last_active_at > now() - interval '45 minutes'"
+      "SELECT * FROM users WHERE last_active_at > now() - interval '12 hours'"
     );
 
     //Emit the active users to the client
@@ -157,7 +157,7 @@ app.get("/api/users", async (req, res) => {
 app.get("/api/users/active", async (req, res) => {
   try {
     const active = await pool.query(
-      "SELECT * FROM users WHERE last_active_at > now() - interval ' 45 minutes'"
+      "SELECT * FROM users WHERE last_active_at > now() - interval ' 12 hours'"
     );
 
     console.log(active);
@@ -182,7 +182,7 @@ app.post("/api/logout", async (req, res) => {
 
     //Query the db for the remaining users
     const stillActive = await pool.query(
-      "SELECT * FROM users WHERE last_active_at > now() - interval ' 45 minutes'"
+      "SELECT * FROM users WHERE last_active_at > now() - interval ' 12 hours'"
     );
 
     //Emit the actve users to the client

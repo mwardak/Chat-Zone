@@ -1,19 +1,14 @@
 import React, { useRef } from "react";
 import axios from "axios";
-// import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-//import photos
-import chatzone from "./chatzone.png";
-
-
+import chatzone from "../images/chatzone.png";
 
 // import jwt_decode from "jwt-decode";
 
 const LoginForm = ({ setIsLoggedIn }) => {
   let emailInputRef = useRef();
   let passwordInputRef = useRef();
-  // let history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,8 +52,16 @@ const LoginForm = ({ setIsLoggedIn }) => {
       }}
       onSubmit={handleSubmit}
     >
-      <img src={chatzone} style={{width:368, height:180, alignContent:"initial", borderRadius:"5mm"}} />
-      <div className="login-group" style={{marginTop:20}}>
+      <img
+        src={chatzone}
+        style={{
+          width: 368,
+          height: 180,
+          alignContent: "initial",
+          borderRadius: "5mm",
+        }}
+      />
+      <div className="login-group" style={{ marginTop: 20 }}>
         <label>Email Address</label>
         <input
           required

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import chatzone from "./chatzone.png";
+import chatzone from "./images/chatzone.png.png";
 
 const Register = () => {
   let firstNameRef = useRef();
@@ -12,7 +12,6 @@ const Register = () => {
   let passwordInputRef = useRef();
   let history = useHistory();
 
- 
   /**
    * if new user is registering send post request to database and insert first, lastname, email and password into table
    * then redirect to login page
@@ -28,26 +27,34 @@ const Register = () => {
       password: passwordInputRef.current.value,
     };
 
-   
     // send http reqeuest to server with credentials below to insert into table
-  await axios.post("/api/register", body);
-  history.push("/");
+    await axios.post("/api/register", body);
+    history.push("/");
   };
-  
-  
-  
 
   return (
-    <form className="container" style={{
-      width: 400,
-      marginTop: 35,
-      border: "1px solid ",
-      backgroundColor: "#cad5df",
-      borderRadius: "5mm",
-    }} onSubmit={handleSubmit}>
-      <img src={chatzone} style={{width:368, height:180, alignContent:"initial", borderRadius:"5mm"}} />
+    <form
+      className="container"
+      style={{
+        width: 400,
+        marginTop: 35,
+        border: "1px solid ",
+        backgroundColor: "#cad5df",
+        borderRadius: "5mm",
+      }}
+      onSubmit={handleSubmit}
+    >
+      <img
+        src={chatzone}
+        style={{
+          width: 368,
+          height: 180,
+          alignContent: "initial",
+          borderRadius: "5mm",
+        }}
+      />
       <div className="form-group">
-        <label style={{marginTop:10}}>First Name</label>
+        <label style={{ marginTop: 10 }}>First Name</label>
         <input
           required
           type="firsName"
@@ -97,9 +104,8 @@ const Register = () => {
       <button type="submit" className="btn btn-primary">
         Submit
       </button>
-      
 
-      <p style={{marginTop:22}}>
+      <p style={{ marginTop: 22 }}>
         Already have an account? <Link to="/">LOGIN</Link>
       </p>
     </form>

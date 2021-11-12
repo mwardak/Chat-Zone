@@ -9,6 +9,9 @@ CREATE TABLE users(
     
     );
 
+ALTER TABLE users
+ADD COLUMN last_active_at timestamp without time zone;
+
 CREATE TABLE messages(
      messages_id SERIAL PRIMARY KEY,
 	 messages_text VARCHAR(225) NOT NULL,
