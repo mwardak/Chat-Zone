@@ -3,7 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import chatzone from "./images/chatzone.png.png";
+import chatzone from "../images/chatzone.png";
 
 const Register = () => {
   let firstNameRef = useRef();
