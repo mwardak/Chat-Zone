@@ -11,7 +11,7 @@ This is a full-stack chat application built with React, Node, Express, PostgreSQ
 <image src ="client/src/images/login.png" width="250" height="250" >
 <image src ="client/src/images/register.png" width="245" height="250" >
 <image src ="client/src/images/chat.png" width="250" height="250" >
-client\src\images
+
 </br>
 </br>
 
