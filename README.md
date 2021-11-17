@@ -8,9 +8,10 @@ This is a full-stack chat application built with React, Node, Express, PostgreSQ
 </p>
 
 <br>
-<image src ="src/images/login.png" width="250" height="250" >
-<image src ="src/images/register.png" width="245" height="250" >
-<image src ="src/images/chat.png" width="250" height="250" >
+<image src ="client/src/images/login.png" width="250" height="250" >
+<image src ="client/src/images/register.png" width="245" height="250" >
+<image src ="client/src/images/chat.png" width="250" height="250" >
+client\src\images
 </br>
 </br>
 
@@ -53,10 +54,10 @@ There is so much that I have learned but here is a list of the main concepts tha
 </div>
 
 <div>
-<image src ="src\images\react-logo.png" width="97" height="97" style="margin-left:0.5em">
-<image src ="src\images\nodejs.png" width="96" height="96" style="margin-left:0.5em">
-<image src ="src\images\psql.png" width="93" height="96" style="margin-left:0.5em">
-<image src ="src\images\heroku-logo.png" width="95" height="96" style="margin-left:0.5em">
+<image src ="client/src/images/react-logo.png" width="97" height="97" style="margin-left:0.5em">
+<image src ="client/src/images/nodejs.png" width="96" height="96" style="margin-left:0.5em">
+<image src ="client/src/images/psql.png" width="93" height="96" style="margin-left:0.5em">
+<image src ="client/src/images/heroku-logo.png" width="95" height="96" style="margin-left:0.5em">
 
 </div>
 <br>
