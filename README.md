@@ -8,9 +8,9 @@ This is a full-stack chat application built with React, Node, Express, PostgreSQ
 </p>
 
 <br>
-<image src ="src/images/login.png" width="245" height="250" >
+<image src ="src/images/login.png" width="250" height="250" >
 <image src ="src/images/register.png" width="245" height="250" >
-<image src ="src/images/chat.png" width="260" height="250" >
+<image src ="src/images/chat.png" width="250" height="250" >
 </br>
 </br>
 
