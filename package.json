@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "client": "npm run watch --prefix client",
     "dev": "concurrently \"nodemon server.js\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
@@ -23,6 +23,11 @@
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.6"
-  }
+  },
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ]
 }
