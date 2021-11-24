@@ -70,7 +70,21 @@ textarea {
   color: #48b0f7 !important;
 }
 
-.users{
+.users {
   justify-content: center;
+}
 
+.bubble {
+  background-color: #afb6cb33;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bubble:hover {
+  background-color: #e2edf7;
 }

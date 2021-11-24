@@ -15,6 +15,16 @@ This is a full-stack chat application built with React, Node, Express, PostgreSQ
 </br>
 </br>
 
+## How to us this app
+
+<ul>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+
 ## Summary
 
 This is the fist full stack applcation I created with React JS , Node js, Express and PSQL.

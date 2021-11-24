@@ -2,8 +2,7 @@ import React from "react";
 
 const Users = ({ users }) => {
   const userName = users.map((user) => {
-    console.log(user);
-    return <p>{user.firstname}</p>;
+    return <p key={user.id}>{user.firstname}</p>;
   });
 
   return (

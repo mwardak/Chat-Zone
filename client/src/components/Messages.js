@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useCallback } from "react";
 
-const Messages = ({messages }) => {
-  
+const Messages = ({ messages }) => {
+  const setRef = useCallback((node) => {
+    if (node) node.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
   let chatMessages;
   if (messages) {
-    chatMessages = messages.map((chat) => {
-      
+    chatMessages = messages.map((chat, index) => {
       return (
-        <>
+        <div key={index} ref={setRef} className="bubble">
           <p style={{ fontWeight: "bold" }}>{chat.firstname}</p>
-          <p style={{ backgroundColor: "ghostwhite"}}>{chat.messages_text}</p>
-        </>
+          <p>{chat.messages_text}</p>
+        </div>
       );
     });
   }
@@ -34,7 +36,7 @@ const Messages = ({messages }) => {
         >
           <div>
             <div>
-              <p>{chatMessages}</p>
+              <div>{chatMessages}</div>
             </div>
           </div>
         </div>

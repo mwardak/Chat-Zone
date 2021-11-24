@@ -1,11 +1,8 @@
 import React, { useRef } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import chatzone from "../images/chatzone.png";
-console.log(chatzone);
-
-// import jwt_decode from "jwt-decode";
 
 const LoginForm = ({ setIsLoggedIn }) => {
   let emailInputRef = useRef();
@@ -13,6 +10,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     // send http reqeuest to server with email & password to check and validate on the server
     const loginBody = {
       email: emailInputRef.current.value,
@@ -55,6 +53,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
     >
       <img
         src={chatzone}
+        alt="chatzone"
         style={{
           width: 368,
           height: 180,

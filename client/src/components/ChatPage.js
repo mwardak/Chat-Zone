@@ -34,6 +34,10 @@ const ChatPage = ({ setIsLoggedIn }) => {
 
     fetchUser();
     fetchMessage();
+
+    return () => {
+      socket.off();
+    };
   }, []);
 
   const fetchUser = async () => {
@@ -112,7 +116,7 @@ const ChatPage = ({ setIsLoggedIn }) => {
         className="btn btn-secondary"
         onClick={logoutUser}
       >
-        logout
+        Logout
       </button>
 
       <div className="page-content page-container" id="page-content">

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const pool = require("../database/dbPool");
-require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
   try {
@@ -26,13 +26,13 @@ router.post("/register", async (req, res) => {
 
     res.json({ newUser });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 });
 
 router.post("/loginform", async (req, res) => {
   const { email, password } = req.body;
-
+  const io = req.app.get("socketio");
   try {
     //select firstname and email database
     const userEmail = await pool.query("SELECT * FROM users WHERE email = $1", [
@@ -70,7 +70,30 @@ router.post("/loginform", async (req, res) => {
     //send token and email to client
     res.json({ token, email });
   } catch (err) {
-    res.status(500).send({ err });
+    res.status(500).send({ message: err.message });
+  }
+});
+
+router.post("/logout", async (req, res) => {
+  const { userEmail } = req.body;
+  const io = req.app.get("socketio");
+  // Set user to inactive in the db  last_active_at = null
+  try {
+    await pool.query("UPDATE users SET last_active_at = $1 WHERE email = $2", [
+      null,
+      userEmail,
+    ]);
+
+    //Query the db for the remaining users
+    const stillActive = await pool.query(
+      "SELECT * FROM users WHERE last_active_at > now() - interval ' 12 hours'"
+    );
+
+    //Emit the actve users to the client
+    io.emit("logout", { activeUsers: stillActive.rows });
+    res.json({ message: "logged out" });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
   }
 });
 
