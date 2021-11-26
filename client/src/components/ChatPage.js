@@ -41,7 +41,6 @@ const ChatPage = ({ setIsLoggedIn }) => {
   }, []);
 
   const fetchUser = async () => {
-    //create a header with  token from local storage to send to server
     const config = {
       headers: {
         token: localStorage.getItem("token"),
