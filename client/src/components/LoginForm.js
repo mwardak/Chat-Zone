@@ -11,7 +11,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // send http reqeuest to server with email & password to check and validate on the server
     const loginBody = {
       email: emailInputRef.current.value,
       password: passwordInputRef.current.value,
