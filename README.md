@@ -33,14 +33,14 @@ Navigate to http://localhost:3000/</li>
 
 ## Summary
 
-This is the fist full stack applcation I created with React JS , Node js, Express and PSQL.
+This is the first full stack application I created with React, Node, Express and PSQL.
 
-Users create an account by Registering. Once they have completed registration they will be redirected to Login and have access to the chat.
+Users can create an account by registering. Once they have completed registration they will be redirected to Login and have access to the chat.
 
 JWT is stored in local storage to save the users session. This allows users to re-enter without having to login again.
 
 <br>
-There is so much that I have learned but here is a list of the main concepts that I understand now:
+There is so much that I have learned when I was building this app but here is a list of the main concepts that I understand now:
 <ul>
 <li>Node as web server, serving up static files to the client</li>
 <li>Express for handling API calls</li> 
@@ -56,7 +56,7 @@ There is so much that I have learned but here is a list of the main concepts tha
 ## Technologies/ Libraries Used:
 
  <ul>
-    <li>React JS</li>
+    <li>React</li>
     <li>Node</li>
     <li>Express</li>
     <li>PSQL</li>
