@@ -15,7 +15,7 @@ This is a full-stack chat application built with React, Node, Express, PostgreSQ
 </br>
 </br>
 
-## How to us this app
+## How to use this app
 
 <ul>
 <li>clone repository onto local machine</li>
