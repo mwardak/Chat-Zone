@@ -18,11 +18,17 @@ This is a full-stack chat application built with React, Node, Express, PostgreSQ
 ## How to us this app
 
 <ul>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
+<li>clone repository onto local machine</li>
+<li>cd into the project folder</li>
+<li>create a <code>.env</code> file by running <code>touch.env</code> in the root directory</li>
+<li>copy and paste content from sample file <code>.env_sample</code> to <code>.env</code> file and replace/enter db credentials and token secret</li>
+<li>install dependencies:
+in the root, run <code>npm i</code>
+ and cd into client and <code>run npm i</code></li>
+<li>run the application:
+cd back out to root <code>cd ..</code> and run: <code>npm run dev</code></li>
+<li>view application in the browser:
+Navigate to http://localhost:3000/</li>
 </ul>
 
 ## Summary
@@ -35,14 +41,14 @@ JWT is stored in local storage to save the users session. This allows users to r
 
 <br>
 There is so much that I have learned but here is a list of the main concepts that I understand now:
-
+<ul>
 <li>Node as web server, serving up static files to the client</li>
 <li>Express for handling API calls</li> 
 <li>Password hashing using bcrypt</li>  
 <li>User authentication with JWT</li>
 <li>CRUD functionality and managing data with PSQL</li>
 <li>Deployment to Heroku and hosting the database on ElphantSQL</li>
-
+</ul>
 </br>
 
  </br>
@@ -75,5 +81,5 @@ There is so much that I have learned but here is a list of the main concepts tha
 ## Author
 
 <ul>
-<li><strong>Maher Wardak</strong> - <em>Full-Stack Software Developer</em> - <a href="https://www.linkedin.com/in/maherwardak/" rel="nofollow">LinkedIn</a></li>
+<strong>Maher Wardak</strong> - <em>Full-Stack Software Developer</em> - <a href="https://maher-wardak.herokuapp.com/" rel="nofollow">Website</a> | <a href="https://www.linkedin.com/in/maherwardak/" rel="nofollow">LinkedIn</a></li>
 </ul>
