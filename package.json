@@ -7,7 +7,7 @@
     "test": "jest",
     "client": "npm run watch --prefix client",
     "dev": "concurrently \"nodemon server.js\" \"npm run client\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && SKIP_PREFLIGHT_CHECK=true npm run build"
   },
   "author": "",
   "license": "ISC",
