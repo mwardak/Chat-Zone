@@ -21,6 +21,7 @@ This is a full-stack chat application built with React, Node, Express, PostgreSQ
 <li>clone repository onto local machine</li>
 <li>cd into the project folder</li>
 <li>create a <code>.env</code> file by running <code>touch.env</code> in the root directory</li>
+<li>create database and reference database.sql file</li> 
 <li>copy and paste content from sample file <code>.env_sample</code> to <code>.env</code> file and replace/enter db credentials and token secret</li>
 <li>install dependencies:
 in the root, run <code>npm i</code>
